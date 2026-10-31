@@ -32,7 +32,7 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 
     //test.js
     const {Solar} = require('lunar-vietnamese')
-    //const {Solar, Lunar, HolidayUtil} = require('lunar-javascript')
+    //const {Solar, Lunar, HolidayUtil} = require('lunar-vietnamese')
 
     let solar = Solar.fromYmd(1986,5,29);
     console.log(solar.toFullString());
@@ -54,9 +54,14 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 
 Output:
 
-    1986-05-29 00:00:00 星期四 双子座
-    一九八六年四月廿一 丙寅(虎)年 癸巳(蛇)月 癸酉(鸡)日 子(鼠)时 纳音[炉中火 长流水 剑锋金 桑柘木] 星期四 北方玄武 星宿[斗木獬](吉) 彭祖百忌[癸不词讼理弱敌强 酉不会客醉坐颠狂] 喜神方位[巽](东南) 阳贵神方位[巽](东南) 阴贵神方位[震](正东) 福神方位[兑](正西) 财神方位[离](正南) 冲[(丁卯)兔] 煞[东]
+    1986-05-29 00:00:00 Thứ Năm Song Tử
+    Hai Mươi Mốt tháng Tư năm Một Chín Tám Sáu năm Bính Dần(Hổ) tháng Quý Tỵ(Rắn) ngày Quý Dậu(Gà) giờ Tý(Chuột) Nạp âm[Lư Trung Hỏa Trường Lưu Thủy Kiếm Phong Kim Tang Đố Mộc] Thứ Năm Bắc phương Huyền Vũ Nhị thập bát tú[Đẩu Mộc Giải](Cát) Bành Tổ bách kỵ[Quý không kiện tụng lý yếu địch mạnh Dậu không đón khách say xỉn cuồng điên] Hỷ thần hướng[Tốn](Đông Nam) Dương quý thần hướng[Tốn](Đông Nam) Âm quý thần hướng[Chấn](Chính Đông) Phúc thần hướng[Cấn](Đông Bắc) Tài thần hướng[Ly](Chính Nam) Xung[(Đinh Mão) Mèo] Sát[Đông]
 
 ## Documentation
 
-Please visit [https://6tail.cn/calendar/api.html](https://6tail.cn/calendar/api.html "https://6tail.cn/calendar/api.html")
+Please refer to [README.md](README.md) or visit [https://github.com/congtruongwr/lunar-vietnamese](https://github.com/congtruongwr/lunar-vietnamese) for detailed API usage and documentation.
+
+## License & Copyright
+
+Released under the [Apache License 2.0](LICENSE).
+Maintained and developed by **congtruongwr**.

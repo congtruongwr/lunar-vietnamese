@@ -89,4 +89,4 @@ console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 ## 📄 Bản Quyền & Giấy Phép
 
 Phát hành dưới giấy phép [Apache License 2.0](LICENSE).
-Tác quyền duy trì và tinh chỉnh: **congtruongwr** (kế thừa thuật toán thiên văn nền tảng của 6tail).
+Tác quyền duy trì và phát triển: **congtruongwr**.
