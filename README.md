@@ -1,62 +1,89 @@
-# lunar [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/6tail/lunar-javascript/blob/master/LICENSE)
+# lunar-vietnamese [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-lunar是一款无第三方依赖的公历(阳历)、农历(阴历、老黄历)、佛历和道历工具，支持星座、儒略日、干支、生肖、节气、节日、彭祖百忌、每日宜忌、吉神宜趋、凶煞宜忌、吉神(喜神/福神/财神/阳贵神/阴贵神)方位、胎神方位、冲煞、纳音、星宿、八字、五行、十神、建除十二值星、青龙名堂等十二神、黄道日及吉凶等。
+**`lunar-vietnamese`** là thư viện JavaScript không phụ thuộc bên ngoài (zero-dependencies), chuyên dùng để tính toán và tra cứu:
+- **Dương lịch (Solar)** & **Âm lịch Việt Nam (Lunar)**
+- **Can Chi, 12 Con Giáp** chuẩn văn hóa Việt Nam (**Mão = Mèo**, thay vì Thỏ như Trung Quốc)
+- **24 Tiết khí, 60 Hoa Giáp, Bát tự, Ngũ hành, Thập thần**
+- **Kiến trừ thập nhị trực, Nhị thập bát tú, Bát quái, Phương vị cát thần (Tài thần, Hỷ thần, Phúc thần)**
+- **Bành Tổ bách kỵ, Ngày giờ hoàng đạo/hắc đạo, Nạp âm, Xung sát**
 
-[English](https://github.com/6tail/lunar-javascript/blob/master/README_EN.md)
+Dự án được duy trì và phát triển bởi **congtruongwr** trên nhánh `main`.
 
-## 示例
+---
 
-### 普通页面
+## 🚀 Cài Đặt & Sử Dụng
+
+### 1. Trong Node.js (CommonJS)
+
+```bash
+npm install lunar-vietnamese
+```
+
+```javascript
+const { Solar, Lunar, I18n } = require('lunar-vietnamese');
+
+// Mặc định ngôn ngữ khởi tạo là tiếng Việt ('vi')
+const solar = Solar.fromYmd(2026, 10, 31);
+console.log(solar.toFullString());
+// Kết quả: 2026-10-31 00:00:00 Thứ Bảy (Đêm Halloween) Bọ Cạp
+
+const lunar = solar.getLunar();
+console.log(lunar.toFullString());
+// Kết quả: Hai Mươi Hai tháng Chín năm Hai Không Hai Sáu năm Bính Ngọ(Ngựa) tháng Mậu Tuất(Chó) ngày Mậu Dần(Hổ) giờ Tý(Chuột) Nạp âm[Thiên Hà Thủy Bình Địa Mộc Thành Đầu Thổ Tang Đố Mộc] Thứ Bảy Tây phương Bạch Hổ Nhị thập bát tú[Vị Thổ Heo rừng](Cát) Bành Tổ bách kỵ[Mậu không nhận ruộng chủ ruộng bất an Dần không tế tự quỷ thần không hưởng] Hỷ thần hướng[Tốn](Đông Nam) Dương quý thần hướng[Cấn](Đông Bắc) Âm quý thần hướng[Khôn](Tây Nam) Phúc thần hướng[Cấn](Đông Bắc) Tài thần hướng[Khảm](Chính Bắc) Xung[(Nhâm Thân) Khỉ] Sát[Bắc]
+```
+
+### 2. Sử dụng trực tiếp trên trình duyệt (HTML)
 
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="vi">
   <head>
     <meta charset="utf-8" />
+    <title>Tra cứu Âm Lịch Việt Nam</title>
+    <script src="lunar.js"></script>
   </head>
   <body>
-    <script src="lunar.js"></script>
     <script>
-      var solar = Solar.fromYmd(1986, 5, 29);
-      console.log(solar.toFullString());
-      console.log(solar.getLunar().toFullString());
+      // Lấy ngày hiện tại
+      var today = Lunar.fromDate(new Date());
+      document.write("<h3>Âm lịch: " + today.toFullString() + "</h3>");
+      document.write("<p>Dương lịch: " + today.getSolar().toFullString() + "</p>");
     </script>
   </body>
 </html>
 ```
 
-### npm
+### 3. Đa ngôn ngữ (I18n)
 
-    npm init
-    npm install lunar-javascript
+Thư viện hỗ trợ chuyển đổi linh hoạt giữa 3 ngôn ngữ: tiếng Việt (`vi`), tiếng Trung giản thể (`chs`), và tiếng Anh (`en`):
 
-    //test.js
-    const {Solar} = require('lunar-javascript')
-    //const {Solar, Lunar, HolidayUtil} = require('lunar-javascript')
+```javascript
+const { I18n, Lunar } = require('lunar-vietnamese');
 
-    let solar = Solar.fromYmd(1986,5,29);
-    console.log(solar.toFullString());
-    console.log(solar.getLunar().toFullString());
+// Chuyển sang tiếng Anh
+I18n.setLanguage('en');
+console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
-    node test.js
+// Chuyển sang tiếng Trung
+I18n.setLanguage('chs');
+console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
-### Node.js
+// Chuyển lại tiếng Việt chuẩn
+I18n.setLanguage('vi');
+console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
+```
 
-    //test.js
-    const {Solar} = require('./lunar.js')
-    //const {Solar, Lunar, HolidayUtil} = require('./lunar.js')
+---
 
-    let solar = Solar.fromYmd(1986,5,29);
-    console.log(solar.toFullString());
-    console.log(solar.getLunar().toFullString());
+## 🌟 Tính Năng Đặc Biệt Cho Việt Nam
 
-    node test.js
+1. **Chuẩn 12 Con Giáp**: Con giáp thứ tư trong chu kỳ địa chi là **Mão (Mèo)**, thay vì con Thỏ của Trung Quốc.
+2. **Ngôn ngữ mặc định**: Tự động hiển thị tiếng Việt chuẩn xác mà không cần cấu hình thêm.
+3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa chuẩn Hán-Việt.
 
-输出结果：
+---
 
-    1986-05-29 00:00:00 星期四 双子座
-    一九八六年四月廿一 丙寅(虎)年 癸巳(蛇)月 癸酉(鸡)日 子(鼠)时 纳音[炉中火 长流水 剑锋金 桑柘木] 星期四 北方玄武 星宿[斗木獬](吉) 彭祖百忌[癸不词讼理弱敌强 酉不会客醉坐颠狂] 喜神方位[巽](东南) 阳贵神方位[巽](东南) 阴贵神方位[震](正东) 福神方位[兑](正西) 财神方位[离](正南) 冲[(丁卯)兔] 煞[东]
+## 📄 Bản Quyền & Giấy Phép
 
-## 文档
-
-请移步至 [https://6tail.cn/calendar/api.html](https://6tail.cn/calendar/api.html "https://6tail.cn/calendar/api.html")
+Phát hành dưới giấy phép [MIT License](LICENSE).
+Tác quyền duy trì và tinh chỉnh: **congtruongwr** (dựa trên thuật toán thiên văn nền tảng của 6tail).
