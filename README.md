@@ -1,4 +1,4 @@
-# lunar-vietnamese [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+# lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 **`lunar-vietnamese`** là thư viện JavaScript không phụ thuộc bên ngoài (zero-dependencies), chuyên dùng để tính toán và tra cứu:
 - **Dương lịch (Solar)** & **Âm lịch Việt Nam (Lunar)**
@@ -85,5 +85,5 @@ console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
 ## 📄 Bản Quyền & Giấy Phép
 
-Phát hành dưới giấy phép [MIT License](LICENSE).
-Tác quyền duy trì và tinh chỉnh: **congtruongwr** (dựa trên thuật toán thiên văn nền tảng của 6tail).
+Phát hành dưới giấy phép [Apache License 2.0](LICENSE).
+Tác quyền duy trì và tinh chỉnh: **congtruongwr** (kế thừa thuật toán thiên văn nền tảng của 6tail).
