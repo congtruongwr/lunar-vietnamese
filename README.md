@@ -1,6 +1,7 @@
 # lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 **`lunar-vietnamese`** là thư viện JavaScript không phụ thuộc bên ngoài (zero-dependencies), chuyên dùng để tính toán và tra cứu:
+
 - **Dương lịch (Solar)** & **Âm lịch Việt Nam (Lunar)**
 - **Can Chi, 12 Con Giáp** chuẩn văn hóa Việt Nam (**Mão = Mèo**, thay vì Thỏ như Trung Quốc)
 - **24 Tiết khí, 60 Hoa Giáp, Bát tự, Ngũ hành, Thập thần**
@@ -20,7 +21,7 @@ npm install lunar-vietnamese
 ```
 
 ```javascript
-const { Solar, Lunar, I18n } = require('lunar-vietnamese');
+const { Solar, Lunar, I18n } = require("lunar-vietnamese");
 
 // Mặc định ngôn ngữ khởi tạo là tiếng Việt ('vi')
 const solar = Solar.fromYmd(2026, 10, 31);
@@ -47,7 +48,9 @@ console.log(lunar.toFullString());
       // Lấy ngày hiện tại
       var today = Lunar.fromDate(new Date());
       document.write("<h3>Âm lịch: " + today.toFullString() + "</h3>");
-      document.write("<p>Dương lịch: " + today.getSolar().toFullString() + "</p>");
+      document.write(
+        "<p>Dương lịch: " + today.getSolar().toFullString() + "</p>",
+      );
     </script>
   </body>
 </html>
@@ -58,18 +61,18 @@ console.log(lunar.toFullString());
 Thư viện hỗ trợ chuyển đổi linh hoạt giữa 3 ngôn ngữ: tiếng Việt (`vi`), tiếng Trung giản thể (`chs`), và tiếng Anh (`en`):
 
 ```javascript
-const { I18n, Lunar } = require('lunar-vietnamese');
+const { I18n, Lunar } = require("lunar-vietnamese");
 
 // Chuyển sang tiếng Anh
-I18n.setLanguage('en');
+I18n.setLanguage("en");
 console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
 // Chuyển sang tiếng Trung
-I18n.setLanguage('chs');
+I18n.setLanguage("chs");
 console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
 // Chuyển lại tiếng Việt chuẩn
-I18n.setLanguage('vi');
+I18n.setLanguage("vi");
 console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 ```
 
