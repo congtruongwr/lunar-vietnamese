@@ -1331,7 +1331,9 @@
           var s = "";
           var zero = "0".charCodeAt(0);
           for (var i = 0, j = y.length; i < j; i++) {
-            s += (i > 0 && I18n.getLanguage() === "vi" ? " " : "") + LunarUtil.NUMBER[y.charCodeAt(i) - zero];
+            s +=
+              (i > 0 && I18n.getLanguage() === "vi" ? " " : "") +
+              LunarUtil.NUMBER[y.charCodeAt(i) - zero];
           }
           return s;
         },
