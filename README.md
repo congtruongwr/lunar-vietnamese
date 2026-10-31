@@ -58,7 +58,7 @@ console.log(lunar.toFullString());
 
 ### 3. Đa ngôn ngữ (I18n)
 
-Thư viện hỗ trợ chuyển đổi linh hoạt giữa 3 ngôn ngữ: tiếng Việt (`vi`), tiếng Trung giản thể (`chs`), và tiếng Anh (`en`):
+Hỗ trợ chuyển đổi linh hoạt giữa 3 ngôn ngữ: tiếng Việt (`vi`), tiếng Trung giản thể (`chs`), và tiếng Anh (`en`):
 
 ```javascript
 const { I18n, Lunar } = require("lunar-vietnamese");
@@ -82,7 +82,7 @@ console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 
 1. **Chuẩn 12 Con Giáp**: Con giáp thứ tư trong chu kỳ địa chi là **Mão (Mèo)**, thay vì con Thỏ của Trung Quốc.
 2. **Ngôn ngữ mặc định**: Tự động hiển thị tiếng Việt chuẩn xác mà không cần cấu hình thêm.
-3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa chuẩn Hán-Việt.
+3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa.
 
 ---
 
