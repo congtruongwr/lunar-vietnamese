@@ -7,14 +7,14 @@ Tất cả các thay đổi quan trọng của dự án **`lunar-vietnamese`** �
 ### ✨ Tính Năng & Bản Địa Hóa Mới
 
 - **Bản địa hóa tiếng Việt toàn diện (`vi`)**:
-  - Tích hợp bộ từ điển Hán-Việt chuẩn xác với hơn 803 thuật ngữ cổ học thiên văn, âm dương, ngũ hành, can chi, 24 tiết khí, 60 hoa giáp, 28 sao nhị thập bát tú, trực kiến trừ, nạp âm và bành tổ bách kỵ.
+  - Tích hợp bộ từ điển chuẩn xác với hơn 803 thuật ngữ cổ học thiên văn, âm dương, ngũ hành, can chi,...
   - Chuẩn hóa 12 Con Giáp theo văn hóa Việt Nam: địa chi **Mão (Mèo)** thay thế cho con Thỏ.
   - Thiết lập tiếng Việt (`vi`) làm ngôn ngữ mặc định của thư viện (`_defaultLang = 'vi'`).
   - Tự động định dạng khoảng cách chuẩn cho chuỗi Can Chi và Nạp âm tiếng Việt (ví dụ: "Bính Ngọ", "Thiên Hà Thủy").
 - **Giao diện trải nghiệm**:
   - Bổ sung trang `demo.html` trực quan tra cứu lịch Âm - Dương chạy trực tiếp không cần cài đặt.
 - **Tương thích & Đóng gói**:
-  - Hỗ trợ đầy đủ các môi trường: CDN trực tiếp qua jsDelivr, Node.js CommonJS (`require`), và Modern Frontend ES Module / TypeScript (`import`).
+  - Hỗ trợ đầy đủ các môi trường: CDN trực tiếp qua jsDelivr, Node.js CommonJS (require),...
 
 ### 📄 Giấy Phép & Tác Quyền
 
