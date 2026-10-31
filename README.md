@@ -48,9 +48,21 @@ console.log(lunar.toFullString());
 import { Solar, Lunar, I18n } from "lunar-vietnamese";
 ```
 
+**Cách dùng với TypeScript (Next.js TS, Vite + TS, NestJS):**
+
+Thư viện tích hợp sẵn định nghĩa kiểu dữ liệu tĩnh qua `index.d.ts` mà không cần cài thêm gói `@types`:
+
+```typescript
+import { Solar, Lunar, I18n, EightChar, NineStar } from "lunar-vietnamese";
+
+const solar: Solar = Solar.fromYmd(2026, 10, 31);
+const lunar: Lunar = solar.getLunar();
+console.log(lunar.toFullString());
+```
+
 ### 2. Sử dụng trực tiếp trên trình duyệt (HTML)
 
-Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub hoặc tải file `lunar.js` về thư mục dự án:
+Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub (khuyến nghị dùng bản nén `.min.js` ~330KB để tối ưu tốc độ tải trang):
 
 ```html
 <!DOCTYPE html>
@@ -58,9 +70,10 @@ Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub hoặc t
   <head>
     <meta charset="utf-8" />
     <title>Tra cứu Âm Lịch Việt Nam</title>
-    <!-- Nhúng trực tiếp từ CDN GitHub jsDelivr -->
-    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script>
-    <!-- Hoặc tải file lunar.js về máy và nhúng: <script src="lunar.js"></script> -->
+    <!-- Nhúng bản nén tối ưu (Khuyến nghị) -->
+    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.min.js"></script>
+    <!-- Hoặc nhúng bản đầy đủ:
+    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script> -->
   </head>
   <body>
     <script>
@@ -102,6 +115,7 @@ console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 1. **Chuẩn 12 Con Giáp**: Con giáp thứ tư trong chu kỳ địa chi là **Mão (Mèo)**, thay vì con Thỏ của Trung Quốc.
 2. **Ngôn ngữ mặc định**: Tự động hiển thị tiếng Việt chuẩn xác mà không cần cấu hình thêm.
 3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa.
+4. **Sẵn Sàng Cho TypeScript & CDN Nén**: Đi kèm sẵn định nghĩa kiểu `index.d.ts` và bản nén `lunar.min.js` (~330KB) hỗ trợ trực tiếp mọi dự án web/app hiện đại.
 
 ---
 

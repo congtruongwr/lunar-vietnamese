@@ -3,8 +3,9 @@
   "version": "1.7.7",
   "description": "lunar-vietnamese là thư viện tra cứu lịch Âm - Dương, Can Chi, Tiết khí, Con giáp, Hoàng đạo dành riêng cho Việt Nam.",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "test": "node --test __tests__/*.test.js"
+    "test": "node --test __tests__/PackageMeta.test.js __tests__/I18nVietnamese.test.js __tests__/LunarVietnameseOutput.test.js __tests__/TypeScriptDefinition.test.js"
   },
   "repository": {
     "type": "git",

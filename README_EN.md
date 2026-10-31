@@ -13,9 +13,9 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 <html>
   <head>
     <meta charset="utf-8" />
-    <!-- Load directly via jsDelivr CDN from GitHub -->
-    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script>
-    <!-- Or load local script: <script src="lunar.js"></script> -->
+    <!-- Load minified script via jsDelivr CDN (~330KB, Recommended) -->
+    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.min.js"></script>
+    <!-- Or load full script: <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script> -->
   </head>
   <body>
     <script>
@@ -25,6 +25,19 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
     </script>
   </body>
 </html>
+```
+
+### TypeScript / ES Modules
+
+Built-in type declarations (`index.d.ts`) are provided out of the box:
+
+```typescript
+import { Solar, Lunar, I18n } from "lunar-vietnamese";
+
+const solar: Solar = Solar.fromYmd(1986, 5, 29);
+const lunar: Lunar = solar.getLunar();
+console.log(solar.toFullString());
+console.log(lunar.toFullString());
 ```
 
 ### npm (via GitHub)
