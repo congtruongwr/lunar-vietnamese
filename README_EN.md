@@ -1,8 +1,8 @@
-# lunar [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/6tail/lunar-javascript/blob/master/LICENSE)
+# lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-lunar is a calendar library for Solar and Chinese Lunar.
+lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese Lunar calendar.
 
-[简体中文](https://github.com/6tail/lunar-javascript/blob/master/README.md)
+[Tiếng Việt](README.md)
 
 ## Example
 
@@ -28,10 +28,10 @@ lunar is a calendar library for Solar and Chinese Lunar.
 ### npm
 
     npm init
-    npm install lunar-javascript
+    npm install lunar-vietnamese
 
     //test.js
-    const {Solar} = require('lunar-javascript')
+    const {Solar} = require('lunar-vietnamese')
     //const {Solar, Lunar, HolidayUtil} = require('lunar-javascript')
 
     let solar = Solar.fromYmd(1986,5,29);
