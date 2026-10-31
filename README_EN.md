@@ -6,16 +6,18 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 
 ## Example
 
-### Normal Page
+### Normal Page (HTML / CDN)
 
 ```html
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
+    <!-- Load directly via jsDelivr CDN from GitHub -->
+    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script>
+    <!-- Or load local script: <script src="lunar.js"></script> -->
   </head>
   <body>
-    <script src="lunar.js"></script>
     <script>
       var solar = Solar.fromYmd(1986, 5, 29);
       console.log(solar.toFullString());
@@ -25,14 +27,15 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 </html>
 ```
 
-### npm
+### npm (via GitHub)
 
-    npm init
-    npm install lunar-vietnamese
+Install directly from GitHub repository (no npmjs registry required):
+
+    npm init -y
+    npm install github:congtruongwr/lunar-vietnamese
 
     //test.js
     const {Solar} = require('lunar-vietnamese')
-    //const {Solar, Lunar, HolidayUtil} = require('lunar-vietnamese')
 
     let solar = Solar.fromYmd(1986,5,29);
     console.log(solar.toFullString());
@@ -40,11 +43,10 @@ lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese 
 
     node test.js
 
-### Node.js
+### Node.js (Direct File)
 
     //test.js
     const {Solar} = require('./lunar.js')
-    //const {Solar, Lunar, HolidayUtil} = require('./lunar.js')
 
     let solar = Solar.fromYmd(1986,5,29);
     console.log(solar.toFullString());

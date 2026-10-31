@@ -14,11 +14,20 @@ Dự án được duy trì và phát triển bởi **congtruongwr** trên nhánh
 
 ## 🚀 Cài Đặt & Sử Dụng
 
-### 1. Trong Node.js (CommonJS)
+### 1. Trong Node.js / Modern Frontend (Cài đặt qua GitHub)
+
+Hiện tại thư viện được cài đặt trực tiếp qua kho lưu trữ GitHub (không cần tài khoản npmjs):
 
 ```bash
-npm install lunar-vietnamese
+# Cài đặt qua npm
+npm install github:congtruongwr/lunar-vietnamese
+
+# Hoặc qua Yarn / pnpm:
+yarn add github:congtruongwr/lunar-vietnamese
+pnpm add github:congtruongwr/lunar-vietnamese
 ```
+
+**Cách dùng với CommonJS (Node.js):**
 
 ```javascript
 const { Solar, Lunar, I18n } = require("lunar-vietnamese");
@@ -30,10 +39,18 @@ console.log(solar.toFullString());
 
 const lunar = solar.getLunar();
 console.log(lunar.toFullString());
-// Kết quả: Hai Mươi Hai tháng Chín năm Hai Không Hai Sáu năm Bính Ngọ(Ngựa) tháng Mậu Tuất(Chó) ngày Mậu Dần(Hổ) giờ Tý(Chuột) Nạp âm[Thiên Hà Thủy Bình Địa Mộc Thành Đầu Thổ Tang Đố Mộc] Thứ Bảy Tây phương Bạch Hổ Nhị thập bát tú[Vị Thổ Heo rừng](Cát) Bành Tổ bách kỵ[Mậu không nhận ruộng chủ ruộng bất an Dần không tế tự quỷ thần không hưởng] Hỷ thần hướng[Tốn](Đông Nam) Dương quý thần hướng[Cấn](Đông Bắc) Âm quý thần hướng[Khôn](Tây Nam) Phúc thần hướng[Cấn](Đông Bắc) Tài thần hướng[Khảm](Chính Bắc) Xung[(Nhâm Thân) Khỉ] Sát[Bắc]
+// Kết quả: Hai Mươi Hai tháng Chín năm Hai Không Hai Sáu năm Bính Ngọ(Ngựa) tháng Mậu Tuất(Chó) ngày Mậu Dần(Hổ) giờ Tý(Chuột)...
+```
+
+**Cách dùng với ES Module (React, Vue, Vite, Next.js):**
+
+```javascript
+import { Solar, Lunar, I18n } from "lunar-vietnamese";
 ```
 
 ### 2. Sử dụng trực tiếp trên trình duyệt (HTML)
+
+Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub hoặc tải file `lunar.js` về thư mục dự án:
 
 ```html
 <!DOCTYPE html>
@@ -41,7 +58,9 @@ console.log(lunar.toFullString());
   <head>
     <meta charset="utf-8" />
     <title>Tra cứu Âm Lịch Việt Nam</title>
-    <script src="lunar.js"></script>
+    <!-- Nhúng trực tiếp từ CDN GitHub jsDelivr -->
+    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script>
+    <!-- Hoặc tải file lunar.js về máy và nhúng: <script src="lunar.js"></script> -->
   </head>
   <body>
     <script>
