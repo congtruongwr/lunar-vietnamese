@@ -15,7 +15,7 @@ Tất cả các thay đổi quan trọng của dự án **`lunar-vietnamese`** �
   - Bổ sung trang `demo.html` trực quan tra cứu lịch Âm - Dương chạy trực tiếp không cần cài đặt.
 - **Tương thích & Đóng gói**:
   - Bổ sung file định kiểu tĩnh `index.d.ts` cho các dự án TypeScript (React, Next.js, Vite, NestJS,...).
-  - Hỗ trợ đầy đủ các môi trường: CDN trực tiếp qua jsDelivr (cả bản đầy đủ `lunar.js` lẫn bản nén tự động `lunar.min.js`), Node.js CommonJS (require), ES Modules (import), và TypeScript.
+  - Hỗ trợ đầy đủ các môi trường: CDN trực tiếp qua jsDelivr, Node.js CommonJS, ES Modules,...
 
 ### 📄 Giấy Phép & Tác Quyền
 

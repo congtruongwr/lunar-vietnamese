@@ -62,7 +62,7 @@ console.log(lunar.toFullString());
 
 ### 2. Sử dụng trực tiếp trên trình duyệt (HTML)
 
-Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub (khuyến nghị dùng bản nén `.min.js` ~330KB để tối ưu tốc độ tải trang):
+Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub (khuyến nghị dùng bản nén):
 
 ```html
 <!DOCTYPE html>
@@ -115,7 +115,7 @@ console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 1. **Chuẩn 12 Con Giáp**: Con giáp thứ tư trong chu kỳ địa chi là **Mão (Mèo)**, thay vì con Thỏ của Trung Quốc.
 2. **Ngôn ngữ mặc định**: Tự động hiển thị tiếng Việt chuẩn xác mà không cần cấu hình thêm.
 3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa.
-4. **Sẵn Sàng Cho TypeScript & CDN Nén**: Đi kèm sẵn định nghĩa kiểu `index.d.ts` và bản nén `lunar.min.js` (~330KB) hỗ trợ trực tiếp mọi dự án web/app hiện đại.
+4. **Sẵn Sàng Cho TypeScript & CDN Nén**: Hỗ trợ trực tiếp mọi dự án Website và App hiện đại.
 
 ---
 
