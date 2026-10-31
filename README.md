@@ -1,6 +1,6 @@
 # lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-**`lunar-vietnamese`** là thư viện JavaScript không phụ thuộc bên ngoài (zero-dependencies), chuyên dùng để tính toán và tra cứu:
+Thư viện không phụ thuộc bên ngoài, chuyên dùng để tính toán và tra cứu:
 
 - **Dương lịch (Solar)** & **Âm lịch Việt Nam (Lunar)**
 - **Can Chi, 12 Con Giáp** chuẩn văn hóa Việt Nam (**Mão = Mèo**, thay vì Thỏ như Trung Quốc)
