@@ -346,14 +346,17 @@
         toFullString: function () {
           var s = this.toYmdHms();
           if (this.isLeapYear()) {
-            s += " 闰年";
+            s += " " + (I18n.getLanguage() === "vi" ? "Năm nhuận" : "闰年");
           }
-          s += " 星期" + this.getWeekInChinese();
+          s +=
+            (I18n.getLanguage() === "vi" ? " " : " 星期") +
+            this.getWeekInChinese();
           var festivals = this.getFestivals();
           for (var i = 0, j = festivals.length; i < j; i++) {
             s += " (" + festivals[i] + ")";
           }
-          s += " " + this.getXingZuo() + "座";
+          s +=
+            " " + this.getXingZuo() + (I18n.getLanguage() === "vi" ? "" : "座");
           return s;
         },
         nextYear: function (years) {
@@ -1201,13 +1204,25 @@
           return LunarUtil.ZHI[this._p.yearZhiIndexExact + 1];
         },
         getYearInGanZhi: function () {
-          return this.getYearGan() + this.getYearZhi();
+          return (
+            this.getYearGan() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getYearZhi()
+          );
         },
         getYearInGanZhiByLiChun: function () {
-          return this.getYearGanByLiChun() + this.getYearZhiByLiChun();
+          return (
+            this.getYearGanByLiChun() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getYearZhiByLiChun()
+          );
         },
         getYearInGanZhiExact: function () {
-          return this.getYearGanExact() + this.getYearZhiExact();
+          return (
+            this.getYearGanExact() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getYearZhiExact()
+          );
         },
         getMonthGan: function () {
           return LunarUtil.GAN[this._p.monthGanIndex + 1];
@@ -1222,10 +1237,18 @@
           return LunarUtil.ZHI[this._p.monthZhiIndexExact + 1];
         },
         getMonthInGanZhi: function () {
-          return this.getMonthGan() + this.getMonthZhi();
+          return (
+            this.getMonthGan() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getMonthZhi()
+          );
         },
         getMonthInGanZhiExact: function () {
-          return this.getMonthGanExact() + this.getMonthZhiExact();
+          return (
+            this.getMonthGanExact() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getMonthZhiExact()
+          );
         },
         getDayGan: function () {
           return LunarUtil.GAN[this._p.dayGanIndex + 1];
@@ -1246,13 +1269,25 @@
           return LunarUtil.ZHI[this._p.dayZhiIndexExact2 + 1];
         },
         getDayInGanZhi: function () {
-          return this.getDayGan() + this.getDayZhi();
+          return (
+            this.getDayGan() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getDayZhi()
+          );
         },
         getDayInGanZhiExact: function () {
-          return this.getDayGanExact() + this.getDayZhiExact();
+          return (
+            this.getDayGanExact() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getDayZhiExact()
+          );
         },
         getDayInGanZhiExact2: function () {
-          return this.getDayGanExact2() + this.getDayZhiExact2();
+          return (
+            this.getDayGanExact2() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getDayZhiExact2()
+          );
         },
         getTimeGan: function () {
           return LunarUtil.GAN[this._p.timeGanIndex + 1];
@@ -1261,7 +1296,11 @@
           return LunarUtil.ZHI[this._p.timeZhiIndex + 1];
         },
         getTimeInGanZhi: function () {
-          return this.getTimeGan() + this.getTimeZhi();
+          return (
+            this.getTimeGan() +
+            (I18n.getLanguage() === "vi" ? " " : "") +
+            this.getTimeZhi()
+          );
         },
         getShengxiao: function () {
           return this.getYearShengXiao();
@@ -1292,7 +1331,7 @@
           var s = "";
           var zero = "0".charCodeAt(0);
           for (var i = 0, j = y.length; i < j; i++) {
-            s += LunarUtil.NUMBER[y.charCodeAt(i) - zero];
+            s += (i > 0 && I18n.getLanguage() === "vi" ? " " : "") + LunarUtil.NUMBER[y.charCodeAt(i) - zero];
           }
           return s;
         },
@@ -1590,11 +1629,14 @@
           return "";
         },
         getDayChongDesc: function () {
+          var isVi = I18n.getLanguage() === "vi";
           return (
             "(" +
             this.getDayChongGan() +
+            (isVi ? " " : "") +
             this.getDayChong() +
             ")" +
+            (isVi ? " " : "") +
             this.getDayChongShengXiao()
           );
         },
@@ -2287,6 +2329,15 @@
           return LunarUtil.getXunKong(this.getDayInGanZhiExact2());
         },
         toString: function () {
+          if (I18n.getLanguage() === "vi") {
+            return (
+              this.getDayInChinese() +
+              " tháng " +
+              this.getMonthInChinese() +
+              " năm " +
+              this.getYearInChinese()
+            );
+          }
           return (
             this.getYearInChinese() +
             "年" +
@@ -2296,24 +2347,42 @@
           );
         },
         toFullString: function () {
+          var isVi = I18n.getLanguage() === "vi";
           var s = this.toString();
           s +=
             " " +
+            (isVi ? "năm " : "") +
             this.getYearInGanZhi() +
             "(" +
             this.getYearShengXiao() +
-            ")年";
+            ")" +
+            (isVi ? "" : "年");
           s +=
             " " +
+            (isVi ? "tháng " : "") +
             this.getMonthInGanZhi() +
             "(" +
             this.getMonthShengXiao() +
-            ")月";
+            ")" +
+            (isVi ? "" : "月");
           s +=
-            " " + this.getDayInGanZhi() + "(" + this.getDayShengXiao() + ")日";
-          s += " " + this.getTimeZhi() + "(" + this.getTimeShengXiao() + ")时";
+            " " +
+            (isVi ? "ngày " : "") +
+            this.getDayInGanZhi() +
+            "(" +
+            this.getDayShengXiao() +
+            ")" +
+            (isVi ? "" : "日");
           s +=
-            " 纳音[" +
+            " " +
+            (isVi ? "giờ " : "") +
+            this.getTimeZhi() +
+            "(" +
+            this.getTimeShengXiao() +
+            ")" +
+            (isVi ? "" : "时");
+          s +=
+            (isVi ? " Nạp âm[" : " 纳音[") +
             this.getYearNaYin() +
             " " +
             this.getMonthNaYin() +
@@ -2322,7 +2391,7 @@
             " " +
             this.getTimeNaYin() +
             "]";
-          s += " 星期" + this.getWeekInChinese();
+          s += (isVi ? " " : " 星期") + this.getWeekInChinese();
           var festivals = this.getFestivals();
           var i;
           var j;
@@ -2337,53 +2406,56 @@
           if (jq.length > 0) {
             s += " [" + jq + "]";
           }
-          s += " " + this.getGong() + "方" + this.getShou();
           s +=
-            " 星宿[" +
+            " " + this.getGong() + (isVi ? " phương " : "方") + this.getShou();
+          s +=
+            (isVi ? " Nhị thập bát tú[" : " 星宿[") +
             this.getXiu() +
+            (isVi ? " " : "") +
             this.getZheng() +
+            (isVi ? " " : "") +
             this.getAnimal() +
             "](" +
             this.getXiuLuck() +
             ")";
           s +=
-            " 彭祖百忌[" +
+            (isVi ? " Bành Tổ bách kỵ[" : " 彭祖百忌[") +
             this.getPengZuGan() +
             " " +
             this.getPengZuZhi() +
             "]";
           s +=
-            " 喜神方位[" +
+            (isVi ? " Hỷ thần hướng[" : " 喜神方位[") +
             this.getDayPositionXi() +
             "](" +
             this.getDayPositionXiDesc() +
             ")";
           s +=
-            " 阳贵神方位[" +
+            (isVi ? " Dương quý thần hướng[" : " 阳贵神方位[") +
             this.getDayPositionYangGui() +
             "](" +
             this.getDayPositionYangGuiDesc() +
             ")";
           s +=
-            " 阴贵神方位[" +
+            (isVi ? " Âm quý thần hướng[" : " 阴贵神方位[") +
             this.getDayPositionYinGui() +
             "](" +
             this.getDayPositionYinGuiDesc() +
             ")";
           s +=
-            " 福神方位[" +
+            (isVi ? " Phúc thần hướng[" : " 福神方位[") +
             this.getDayPositionFu() +
             "](" +
             this.getDayPositionFuDesc() +
             ")";
           s +=
-            " 财神方位[" +
+            (isVi ? " Tài thần hướng[" : " 财神方位[") +
             this.getDayPositionCai() +
             "](" +
             this.getDayPositionCaiDesc() +
             ")";
-          s += " 冲[" + this.getDayChongDesc() + "]";
-          s += " 煞[" + this.getDaySha() + "]";
+          s += (isVi ? " Xung[" : " 冲[") + this.getDayChongDesc() + "]";
+          s += (isVi ? " Sát[" : " 煞[") + this.getDaySha() + "]";
           return s;
         },
         _buildNameAndIndex: function (name, index) {
@@ -9532,10 +9604,827 @@
     };
   })();
   var I18n = (function () {
-    var _defaultLang = "chs";
+    var _defaultLang = "vi";
     var _lang = _defaultLang;
     var _inited = false;
     var _messages = {
+      vi: {
+        "tg.jia": "Giáp",
+        "tg.yi": "Ất",
+        "tg.bing": "Bính",
+        "tg.ding": "Đinh",
+        "tg.wu": "Mậu",
+        "tg.ji": "Kỷ",
+        "tg.geng": "Canh",
+        "tg.xin": "Tân",
+        "tg.ren": "Nhâm",
+        "tg.gui": "Quý",
+        "dz.zi": "Tý",
+        "dz.chou": "Sửu",
+        "dz.yin": "Dần",
+        "dz.mao": "Mão",
+        "dz.chen": "Thìn",
+        "dz.si": "Tỵ",
+        "dz.wu": "Ngọ",
+        "dz.wei": "Mùi",
+        "dz.shen": "Thân",
+        "dz.you": "Dậu",
+        "dz.xu": "Tuất",
+        "dz.hai": "Hợi",
+        "zx.jian": "Kiến",
+        "zx.chu": "Trừ",
+        "zx.man": "Mãn",
+        "zx.ping": "Bình",
+        "zx.ding": "Định",
+        "zx.zhi": "Chấp",
+        "zx.po": "Phá",
+        "zx.wei": "Nguy",
+        "zx.cheng": "Thành",
+        "zx.shou": "Thu",
+        "zx.kai": "Khai",
+        "zx.bi": "Bế",
+        "jz.jiaZi": "Giáp Tý",
+        "jz.yiChou": "Ất Sửu",
+        "jz.bingYin": "Bính Dần",
+        "jz.dingMao": "Đinh Mão",
+        "jz.wuChen": "Mậu Thìn",
+        "jz.jiSi": "Kỷ Tỵ",
+        "jz.gengWu": "Canh Ngọ",
+        "jz.xinWei": "Tân Mùi",
+        "jz.renShen": "Nhâm Thân",
+        "jz.guiYou": "Quý Dậu",
+        "jz.jiaXu": "Giáp Tuất",
+        "jz.yiHai": "Ất Hợi",
+        "jz.bingZi": "Bính Tý",
+        "jz.dingChou": "Đinh Sửu",
+        "jz.wuYin": "Mậu Dần",
+        "jz.jiMao": "Kỷ Mão",
+        "jz.gengChen": "Canh Thìn",
+        "jz.xinSi": "Tân Tỵ",
+        "jz.renWu": "Nhâm Ngọ",
+        "jz.guiWei": "Quý Mùi",
+        "jz.jiaShen": "Giáp Thân",
+        "jz.yiYou": "Ất Dậu",
+        "jz.bingXu": "Bính Tuất",
+        "jz.dingHai": "Đinh Hợi",
+        "jz.wuZi": "Mậu Tý",
+        "jz.jiChou": "Kỷ Sửu",
+        "jz.gengYin": "Canh Dần",
+        "jz.xinMao": "Tân Mão",
+        "jz.renChen": "Nhâm Thìn",
+        "jz.guiSi": "Quý Tỵ",
+        "jz.jiaWu": "Giáp Ngọ",
+        "jz.yiWei": "Ất Mùi",
+        "jz.bingShen": "Bính Thân",
+        "jz.dingYou": "Đinh Dậu",
+        "jz.wuXu": "Mậu Tuất",
+        "jz.jiHai": "Kỷ Hợi",
+        "jz.gengZi": "Canh Tý",
+        "jz.xinChou": "Tân Sửu",
+        "jz.renYin": "Nhâm Dần",
+        "jz.guiMao": "Quý Mão",
+        "jz.jiaChen": "Giáp Thìn",
+        "jz.yiSi": "Ất Tỵ",
+        "jz.bingWu": "Bính Ngọ",
+        "jz.dingWei": "Đinh Mùi",
+        "jz.wuShen": "Mậu Thân",
+        "jz.jiYou": "Kỷ Dậu",
+        "jz.gengXu": "Canh Tuất",
+        "jz.xinHai": "Tân Hợi",
+        "jz.renZi": "Nhâm Tý",
+        "jz.guiChou": "Quý Sửu",
+        "jz.jiaYin": "Giáp Dần",
+        "jz.yiMao": "Ất Mão",
+        "jz.bingChen": "Bính Thìn",
+        "jz.dingSi": "Đinh Tỵ",
+        "jz.wuWu": "Mậu Ngọ",
+        "jz.jiWei": "Kỷ Mùi",
+        "jz.gengShen": "Canh Thân",
+        "jz.xinYou": "Tân Dậu",
+        "jz.renXu": "Nhâm Tuất",
+        "jz.guiHai": "Quý Hợi",
+        "sx.rat": "Chuột",
+        "sx.ox": "Trâu",
+        "sx.tiger": "Hổ",
+        "sx.rabbit": "Mèo",
+        "sx.dragon": "Rồng",
+        "sx.snake": "Rắn",
+        "sx.horse": "Ngựa",
+        "sx.goat": "Dê",
+        "sx.monkey": "Khỉ",
+        "sx.rooster": "Gà",
+        "sx.dog": "Chó",
+        "sx.pig": "Lợn",
+        "sx.zi": "Chuột",
+        "sx.chou": "Trâu",
+        "sx.yin": "Hổ",
+        "sx.mao": "Mèo",
+        "sx.chen": "Rồng",
+        "sx.si": "Rắn",
+        "sx.wu": "Ngựa",
+        "sx.wei": "Dê",
+        "sx.shen": "Khỉ",
+        "sx.you": "Gà",
+        "sx.xu": "Chó",
+        "sx.hai": "Lợn",
+        "dw.long": "Rồng",
+        "dw.niu": "Trâu",
+        "dw.gou": "Chó",
+        "dw.yang": "Dê",
+        "dw.tu": "Thỏ",
+        "dw.shu": "Chuột",
+        "dw.ji": "Gà",
+        "dw.ma": "Ngựa",
+        "dw.hu": "Hổ",
+        "dw.zhu": "Lợn",
+        "dw.hou": "Khỉ",
+        "dw.she": "Rắn",
+        "dw.huLi": "Cáo",
+        "dw.yan": "Yến",
+        "dw.bao": "Báo",
+        "dw.yuan": "Vượn",
+        "dw.yin": "Giun",
+        "dw.lu": "Nai",
+        "dw.wu": "Quạ",
+        "dw.jiao": "Giao long",
+        "dw.lang": "Sói",
+        "dw.fu": "Dơi",
+        "dw.zhang": "Hoẵng",
+        "dw.xu": "Cẩu",
+        "dw.xie": "Giải",
+        "dw.han": "Hãn",
+        "dw.he": "Lửng",
+        "dw.zhi": "Heo rừng",
+        "wx.jin": "Kim",
+        "wx.mu": "Mộc",
+        "wx.shui": "Thủy",
+        "wx.huo": "Hỏa",
+        "wx.tu": "Thổ",
+        "wx.ri": "Nhật",
+        "wx.yue": "Nguyệt",
+        "n.zero": "Không",
+        "n.one": "Một",
+        "n.two": "Hai",
+        "n.three": "Ba",
+        "n.four": "Bốn",
+        "n.five": "Năm",
+        "n.six": "Sáu",
+        "n.seven": "Bảy",
+        "n.eight": "Tám",
+        "n.nine": "Chín",
+        "n.ten": "Mười",
+        "n.eleven": "Mười Một",
+        "n.twelve": "Mười Hai",
+        "d.one": "Mùng Một",
+        "d.two": "Mùng Hai",
+        "d.three": "Mùng Ba",
+        "d.four": "Mùng Bốn",
+        "d.five": "Mùng Năm",
+        "d.six": "Mùng Sáu",
+        "d.seven": "Mùng Bảy",
+        "d.eight": "Mùng Tám",
+        "d.nine": "Mùng Chín",
+        "d.ten": "Mùng Mười",
+        "d.eleven": "Mười Một",
+        "d.twelve": "Mười Hai",
+        "d.thirteen": "Mười Ba",
+        "d.fourteen": "Mười Bốn",
+        "d.fifteen": "Mười Lăm",
+        "d.sixteen": "Mười Sáu",
+        "d.seventeen": "Mười Bảy",
+        "d.eighteen": "Mười Tám",
+        "d.nighteen": "Mười Chín",
+        "d.twenty": "Hai Mươi",
+        "d.twentyOne": "Hai Mươi Mốt",
+        "d.twentyTwo": "Hai Mươi Hai",
+        "d.twentyThree": "Hai Mươi Ba",
+        "d.twentyFour": "Hai Mươi Bốn",
+        "d.twentyFive": "Hai Mươi Lăm",
+        "d.twentySix": "Hai Mươi Sáu",
+        "d.twentySeven": "Hai Mươi Bảy",
+        "d.twentyEight": "Hai Mươi Tám",
+        "d.twentyNine": "Hai Mươi Chín",
+        "d.thirty": "Ba Mươi",
+        "m.one": "Giêng",
+        "m.two": "Hai",
+        "m.three": "Ba",
+        "m.four": "Tư",
+        "m.five": "Năm",
+        "m.six": "Sáu",
+        "m.seven": "Bảy",
+        "m.eight": "Tám",
+        "m.nine": "Chín",
+        "m.ten": "Mười",
+        "m.eleven": "Mười Một",
+        "m.twelve": "Chạp",
+        "w.sun": "Chủ Nhật",
+        "w.mon": "Thứ Hai",
+        "w.tues": "Thứ Ba",
+        "w.wed": "Thứ Tư",
+        "w.thur": "Thứ Năm",
+        "w.fri": "Thứ Sáu",
+        "w.sat": "Thứ Bảy",
+        "xz.aries": "Bạch Dương",
+        "xz.taurus": "Kim Ngưu",
+        "xz.gemini": "Song Tử",
+        "xz.cancer": "Cự Giải",
+        "xz.leo": "Sư Tử",
+        "xz.virgo": "Xử Nữ",
+        "xz.libra": "Thiên Bình",
+        "xz.scorpio": "Bọ Cạp",
+        "xz.sagittarius": "Nhân Mã",
+        "xz.capricornus": "Ma Kết",
+        "xz.aquarius": "Bảo Bình",
+        "xz.pisces": "Song Ngư",
+        "bg.qian": "Càn",
+        "bg.kun": "Khôn",
+        "bg.zhen": "Chấn",
+        "bg.xun": "Tốn",
+        "bg.kan": "Khảm",
+        "bg.li": "Ly",
+        "bg.gen": "Cấn",
+        "bg.dui": "Đoài",
+        "ps.center": "Trung",
+        "ps.dong": "Đông",
+        "ps.nan": "Nam",
+        "ps.xi": "Tây",
+        "ps.bei": "Bắc",
+        "ps.zhong": "Trung Cung",
+        "ps.zhengDong": "Chính Đông",
+        "ps.zhengNan": "Chính Nam",
+        "ps.zhengXi": "Chính Tây",
+        "ps.zhengBei": "Chính Bắc",
+        "ps.dongBei": "Đông Bắc",
+        "ps.dongNan": "Đông Nam",
+        "ps.xiBei": "Tây Bắc",
+        "ps.xiNan": "Tây Nam",
+        "ps.wai": "Ngoài",
+        "ps.fangNei": "Trong phòng",
+        "jq.dongZhi": "Đông Chí",
+        "jq.xiaoHan": "Tiểu Hàn",
+        "jq.daHan": "Đại Hàn",
+        "jq.liChun": "Lập Xuân",
+        "jq.yuShui": "Vũ Thủy",
+        "jq.jingZhe": "Kinh Trập",
+        "jq.chunFen": "Xuân Phân",
+        "jq.qingMing": "Thanh Minh",
+        "jq.guYu": "Cốc Vũ",
+        "jq.liXia": "Lập Hạ",
+        "jq.xiaoMan": "Tiểu Mãn",
+        "jq.mangZhong": "Mang Chủng",
+        "jq.xiaZhi": "Hạ Chí",
+        "jq.xiaoShu": "Tiểu Thử",
+        "jq.daShu": "Đại Thử",
+        "jq.liQiu": "Lập Thu",
+        "jq.chuShu": "Xử Thử",
+        "jq.baiLu": "Bạch Lộ",
+        "jq.qiuFen": "Thu Phân",
+        "jq.hanLu": "Hàn Lộ",
+        "jq.shuangJiang": "Sương Giáng",
+        "jq.liDong": "Lập Đông",
+        "jq.xiaoXue": "Tiểu Tuyết",
+        "jq.daXue": "Đại Tuyết",
+        "ss.biJian": "Tỷ Kiên",
+        "ss.jieCai": "Kiếp Tài",
+        "ss.shiShen": "Thực Thần",
+        "ss.shangGuan": "Thương Quan",
+        "ss.pianCai": "Thiên Tài",
+        "ss.zhengCai": "Chính Tài",
+        "ss.qiSha": "Thất Sát",
+        "ss.zhengGuan": "Chính Quan",
+        "ss.pianYin": "Thiên Ấn",
+        "ss.zhengYin": "Chính Ấn",
+        "s.none": "Không",
+        "s.huangDao": "Hoàng Đạo",
+        "s.heiDao": "Hắc Đạo",
+        "s.goodLuck": "Cát",
+        "s.badLuck": "Hung",
+        "s.yin": "Âm",
+        "s.yang": "Dương",
+        "s.white": "Bạch",
+        "s.black": "Hắc",
+        "s.blue": "Bích",
+        "s.green": "Lục",
+        "s.yellow": "Hoàng",
+        "s.red": "Xích",
+        "s.purple": "Tử",
+        "jr.chuXi": "Đêm Trừ Tịch (Giao thừa)",
+        "jr.chunJie": "Tết Nguyên Đán",
+        "jr.yuanXiao": "Tết Nguyên Tiêu",
+        "jr.longTou": "Tết Long Đầu",
+        "jr.duanWu": "Tết Đoan Ngọ",
+        "jr.qiXi": "Lễ Thất Tịch",
+        "jr.zhongQiu": "Tết Trung Thu",
+        "jr.chongYang": "Tết Trùng Cửu",
+        "jr.laBa": "Lễ Lạp Bát",
+        "jr.yuanDan": "Tết Dương Lịch",
+        "jr.qingRen": "Lễ Tình Nhân",
+        "jr.fuNv": "Ngày Quốc tế Phụ nữ",
+        "jr.zhiShu": "Tết Trồng Cây",
+        "jr.xiaoFei": "Ngày Quyền người tiêu dùng",
+        "jr.wuYi": "Ngày Quốc tế Lao động",
+        "jr.qingNian": "Ngày Thanh niên",
+        "jr.erTong": "Ngày Quốc tế Thiếu nhi",
+        "jr.yuRen": "Ngày Cá tháng Tư",
+        "jr.jianDang": "Ngày Thành lập Đảng",
+        "jr.jianJun": "Ngày Quân đội",
+        "jr.jiaoShi": "Ngày Nhà giáo",
+        "jr.guoQing": "Ngày Quốc khánh",
+        "jr.wanShengYe": "Đêm Halloween",
+        "jr.wanSheng": "Lễ Halloween",
+        "jr.pingAn": "Đêm Giáng sinh",
+        "jr.shengDan": "Lễ Giáng sinh",
+        "ds.changSheng": "Trường Sinh",
+        "ds.muYu": "Mộc Dục",
+        "ds.guanDai": "Quan Đới",
+        "ds.linGuan": "Lâm Quan",
+        "ds.diWang": "Đế Vượng",
+        "ds.shuai": "Suy",
+        "ds.bing": "Bệnh",
+        "ds.si": "Tử",
+        "ds.mu": "Mộ",
+        "ds.jue": "Tuyệt",
+        "ds.tai": "Thai",
+        "ds.yang": "Dưỡng",
+        "ts.zhan": "Chiếm",
+        "ts.hu": "Hộ",
+        "ts.win": "Song (Cửa sổ)",
+        "ts.fang": "Phòng",
+        "ts.chuang": "Sàng (Giường)",
+        "ts.lu": "Lô (Lò)",
+        "ts.zao": "Táo (Bếp)",
+        "ts.dui": "Đối (Cối xay)",
+        "ts.mo": "Ma (Cối nghiền)",
+        "ts.xi": "Tê (Chuồng gà)",
+        "ts.chu": "Trù (Nhà bếp)",
+        "ts.ce": "Xí (Nhà vệ sinh)",
+        "ts.cang": "Thương",
+        "ts.cangKu": "Thương Khố",
+        "ts.daMen": "Đại Môn",
+        "ts.men": "Môn",
+        "ts.tang": "Đường",
+        "ly.xianSheng": "Tiên Thắng",
+        "ly.xianFu": "Tiên Phụ",
+        "ly.youYin": "Hữu Dẫn",
+        "ly.foMie": "Phật Diệt",
+        "ly.daAn": "Đại An",
+        "ly.chiKou": "Xích Khẩu",
+        "xx.bi": "Tất",
+        "xx.yi": "Dực",
+        "xx.ji": "Cơ",
+        "xx.kui": "Khuê",
+        "xx.gui": "Quỷ",
+        "xx.di": "Đê",
+        "xx.xu": "Hư",
+        "xx.wei": "Nguy",
+        "xx.zi": "Chủy",
+        "xx.zhen": "Chẩn",
+        "xx.dou": "Đẩu",
+        "xx.lou": "Lâu",
+        "xx.liu": "Liễu",
+        "xx.fang": "Phòng",
+        "xx.xin": "Tâm",
+        "xx.shi": "Thất",
+        "xx.can": "Sâm",
+        "xx.jiao": "Giác",
+        "xx.niu": "Ngưu",
+        "xx.vei": "Vị",
+        "xx.xing": "Tinh",
+        "xx.zhang": "Trương",
+        "xx.tail": "Vĩ",
+        "xx.qiang": "Bích",
+        "xx.jing": "Tỉnh",
+        "xx.kang": "Cang",
+        "xx.nv": "Nữ",
+        "xx.mao": "Mão",
+        "sz.chun": "Xuân",
+        "sz.xia": "Hạ",
+        "sz.qiu": "Thu",
+        "sz.dong": "Đông",
+        "od.first": "Mạnh",
+        "od.second": "Trọng",
+        "od.third": "Quý",
+        "yx.shuo": "Sóc",
+        "yx.jiShuo": "Ký Sóc",
+        "yx.eMeiXin": "Nga Mi Tân",
+        "yx.eMei": "Nga Mi",
+        "yx.xi": "Tịch",
+        "yx.shangXian": "Thượng Huyền",
+        "yx.jiuYe": "Cửu Dạ",
+        "yx.night": "Tiêu",
+        "yx.jianYingTu": "Tiệm Doanh Đột",
+        "yx.xiaoWang": "Tiểu Vọng",
+        "yx.wang": "Vọng",
+        "yx.jiWang": "Ký Vọng",
+        "yx.liDai": "Lập Đãi",
+        "yx.juDai": "Cư Đãi",
+        "yx.qinDai": "Tẩm Đãi",
+        "yx.gengDai": "Canh Đãi",
+        "yx.jianKuiTu": "Tiệm Khuy Đột",
+        "yx.xiaXian": "Hạ Huyền",
+        "yx.youMing": "Hữu Minh",
+        "yx.eMeiCan": "Nga Mi Tàn",
+        "yx.can": "Tàn",
+        "yx.xiao": "Hiểu",
+        "yx.hui": "Hối",
+        "ny.sangZhe": "Tang Đố ",
+        "ny.baiLa": "Bạch Lạp ",
+        "ny.yangLiu": "Dương Liễu ",
+        "ny.jinBo": "Kim Bạc ",
+        "ny.haiZhong": "Hải Trung ",
+        "ny.daHai": "Đại Hải ",
+        "ny.shaZhong": "Sa Trung ",
+        "ny.luZhong": "Lư Trung ",
+        "ny.shanXia": "Sơn Hạ ",
+        "ny.daLin": "Đại Lâm ",
+        "ny.pingDi": "Bình Địa ",
+        "ny.luPang": "Lộ Bàng ",
+        "ny.biShang": "Bích Thượng ",
+        "ny.jianFeng": "Kiếm Phong ",
+        "ny.shanTou": "Sơn Đầu ",
+        "ny.fuDeng": "Phúc Đăng ",
+        "ny.jianXia": "Giản Hạ ",
+        "ny.tianHe": "Thiên Hà ",
+        "ny.chengTou": "Thành Đầu ",
+        "ny.daYi": "Đại Dịch ",
+        "ny.chaiChuan": "Thoa Xuyến ",
+        "ny.quanZhong": "Tuyền Trung ",
+        "ny.daXi": "Đại Khê ",
+        "ny.wuShang": "Ốc Thượng ",
+        "ny.piLi": "Tích Lịch ",
+        "ny.tianShang": "Thiên Thượng ",
+        "ny.songBo": "Tùng Bách ",
+        "ny.shiLiu": "Thạch Lựu ",
+        "ny.changLiu": "Trường Lưu ",
+        "h.first": "Sơ Hậu",
+        "h.second": "Nhị Hậu",
+        "h.third": "Tam Hậu",
+        "h.qiuYinJie": "Khâu dẫn kết",
+        "h.miJiao": "Mê giác giải",
+        "h.shuiQuan": "Thủy tuyền động",
+        "h.yanBei": "Nhạn bắc hương",
+        "h.queShi": "Thước thủy sào",
+        "h.zhiShi": "Trĩ thủy cấu",
+        "h.jiShi": "Kê thủy nhũ",
+        "h.zhengNiao": "Chinh điểu lệ tật",
+        "h.shuiZe": "Thủy trạch phúc kiên",
+        "h.dongFeng": "Đông phong giải đống",
+        "h.zheChongShiZhen": "Trập trùng thủy chấn",
+        "h.yuZhi": "Ngư trắc phụ băng",
+        "h.taJi": "Thát tế ngư",
+        "h.houYan": "Hậu nhạn bắc",
+        "h.caoMuMengDong": "Thảo mộc manh động",
+        "h.taoShi": "Đào thủy hoa",
+        "h.cangGeng": "Thương canh minh",
+        "h.yingHua": "Ưng hóa vi cưu",
+        "h.xuanNiaoZhi": "Huyền điểu chí",
+        "h.leiNai": "Lôi nãi phát thanh",
+        "h.shiDian": "Thủy điện",
+        "h.tongShi": "Đồng thủy hoa",
+        "h.tianShu": "Điền thử hóa vi như",
+        "h.hongShi": "Hồng thủy kiến",
+        "h.pingShi": "Bình thủy sinh",
+        "h.mingJiu": "Minh cưu phất kỳ vũ",
+        "h.daiSheng": "Đới thắng giáng vu tang",
+        "h.louGuo": "Lâu quắc minh",
+        "h.qiuYinChu": "Khâu dẫn xuất",
+        "h.wangGua": "Vương qua sinh",
+        "h.kuCai": "Khổ thái tú",
+        "h.miCao": "Mĩ thảo tử",
+        "h.maiQiu": "Mạch thu chí",
+        "h.tangLang": "Đường lang sinh",
+        "h.juShi": "Cực thủy minh",
+        "h.fanShe": "Phản thiệt vô thanh",
+        "h.luJia": "Lộc giác giải",
+        "h.tiaoShi": "Điều thủy minh",
+        "h.banXia": "Bán hạ sinh",
+        "h.wenFeng": "Ôn phong chí",
+        "h.xiShuai": "Tất suất cư bích",
+        "h.yingShi": "Ưng thủy chí",
+        "h.fuCao": "Hủ thảo vi huỳnh",
+        "h.tuRun": "Thổ nhuận nhục thử",
+        "h.daYu": "Đại vũ hành thời",
+        "h.liangFeng": "Lương phong chí",
+        "h.baiLu": "Bạch lộ giáng",
+        "h.hanChan": "Hàn thiền minh",
+        "h.yingNai": "Ưng nãi tế điểu",
+        "h.tianDi": "Thiên địa thủy túc",
+        "h.heNai": "Hòa nãi đăng",
+        "h.hongYanLai": "Hồng nhạn lai",
+        "h.xuanNiaoGui": "Huyền điểu quy",
+        "h.qunNiao": "Quần điểu dưỡng tu",
+        "h.leiShi": "Lôi thủy thu thanh",
+        "h.zheChongPiHu": "Trập trùng phôi hộ",
+        "h.shuiShiHe": "Thủy thủy hạc",
+        "h.hongYanLaiBin": "Hồng nhạn lai tân",
+        "h.queRu": "Tước nhập đại thủy vi cáp",
+        "h.juYou": "Cúc hữu hoàng hoa",
+        "h.caiNai": "Sài nãi tế thú",
+        "h.caoMuHuangLuo": "Thảo mộc hoàng lạc",
+        "h.zheChongXianFu": "Trập trùng hàm phủ",
+        "h.shuiShiBing": "Thủy thủy băng",
+        "h.diShi": "Địa thủy đống",
+        "h.zhiRu": "Trĩ nhập đại thủy vi thận",
+        "h.hongCang": "Hồng tàng bất kiến",
+        "h.tianQi": "Thiên khí thượng thăng địa khí hạ giáng",
+        "h.biSe": "Bế tắc nhi thành đông",
+        "h.heDan": "Hạt đán bất minh",
+        "h.huShi": "Hổ thủy giao",
+        "h.liTing": "Lệ đĩnh xuất",
+        "yj.jiSi": "Tế tự",
+        "yj.qiFu": "Kỳ phúc",
+        "yj.qiuSi": "Cầu tự",
+        "yj.kaiGuang": "Khai quang",
+        "yj.suHui": "Tố hội",
+        "yj.qiJiao": "Tề tiêu",
+        "yj.zhaiJiao": "Trai tiêu",
+        "yj.muYu": "Mộc dục",
+        "yj.chouShen": "Thù thần",
+        "yj.zaoMiao": "Tạo miếu",
+        "yj.siZhao": "Tự táo",
+        "yj.fenXiang": "Phần hương",
+        "yj.xieTu": "Tạ thổ",
+        "yj.chuHuo": "Xuất hỏa",
+        "yj.diaoKe": "Điêu khắc",
+        "yj.jiaQu": "Giá thú (Cưới hỏi)",
+        "yj.DingHun": "Đính hôn",
+        "yj.naCai": "Nạp thái",
+        "yj.wenMing": "Vấn danh",
+        "yj.naXu": "Nạp tế",
+        "yj.guiNing": "Quy ninh",
+        "yj.anChuang": "An sàng",
+        "yj.heZhang": "Hợp trướng",
+        "yj.guanJi": "Quan kê",
+        "yj.dingMeng": "Đính minh",
+        "yj.jinRenKou": "Tiến nhân khẩu",
+        "yj.caiYi": "Tài y",
+        "yj.wanMian": "Vãn diện",
+        "yj.kaiRong": "Khai dung",
+        "yj.xiuFen": "Tu phần",
+        "yj.qiZuan": "Khởi toản",
+        "yj.poTu": "Phá thổ",
+        "yj.anZang": "An táng",
+        "yj.liBei": "Lập bia",
+        "yj.chengFu": "Thành phục",
+        "yj.chuFu": "Trừ phục",
+        "yj.kaiShengFen": "Khai sinh phần",
+        "yj.heShouMu": "Hợp thọ mộc",
+        "yj.ruLian": "Nhập liệm",
+        "yj.yiJiu": "Di cửu",
+        "yj.puDu": "Phổ độ",
+        "yj.ruZhai": "Nhập trạch",
+        "yj.anXiang": "An hương",
+        "yj.anMen": "An môn",
+        "yj.xiuZao": "Tu tạo",
+        "yj.qiJi": "Khởi cơ",
+        "yj.dongTu": "Động thổ",
+        "yj.shangLiang": "Thượng lương",
+        "yj.shuZhu": "Thụ trụ",
+        "yj.kaiJing": "Khai tỉnh khai trì",
+        "yj.zuoBei": "Tác bi phóng thủy",
+        "yj.chaiXie": "Sái xế",
+        "yj.poWu": "Phá ốc",
+        "yj.huaiYuan": "Hoại viên",
+        "yj.buYuan": "Bổ viên",
+        "yj.faMuZuoLiang": "Phạt mộc tác lương",
+        "yj.zuoZhao": "Tác táo",
+        "yj.jieChu": "Giải trừ",
+        "yj.kaiZhuYan": "Khai trụ nhãn",
+        "yj.chuanPing": "Xuyên bình phiến giá",
+        "yj.gaiWuHeJi": "Cái ốc hợp tích",
+        "yj.kaiCe": "Khai xí",
+        "yj.zaoCang": "Tạo thương",
+        "yj.saiXue": "Tắc huyệt",
+        "yj.pingZhi": "Bình trị đạo đồ",
+        "yj.zaoQiao": "Tạo kiều",
+        "yj.zuoCe": "Tác xí",
+        "yj.zhuDi": "Trúc đê",
+        "yj.kaiChi": "Khai trì",
+        "yj.faMu": "Phạt mộc",
+        "yj.kaiQu": "Khai cừ",
+        "yj.jueJing": "Quật tỉnh",
+        "yj.saoShe": "Tảo xá",
+        "yj.fangShui": "Phóng thủy",
+        "yj.zaoWu": "Tạo ốc",
+        "yj.heJi": "Hợp tích",
+        "yj.zaoChuChou": "Tạo súc trù",
+        "yj.xiuMen": "Tu môn",
+        "yj.dingSang": "Định tảng",
+        "yj.zuoLiang": "Tác lương",
+        "yj.xiuShi": "Tu sức viên tường",
+        "yj.jiaMa": "Giá mã",
+        "yj.kaiShi": "Khai thị (Khai trương)",
+        "yj.guaBian": "Quải biển",
+        "yj.naChai": "Nạp tài",
+        "yj.qiuCai": "Cầu tài",
+        "yj.kaiCang": "Khai thương",
+        "yj.maiChe": "Mãi xa",
+        "yj.zhiChan": "Trí sản",
+        "yj.guYong": "Cố dong",
+        "yj.chuHuoCai": "Xuất hóa tài",
+        "yj.anJiXie": "An cơ giới",
+        "yj.zaoCheQi": "Tạo xa khí",
+        "yj.jingLuo": "Kinh lạc",
+        "yj.yunNiang": "Uẩn nhưỡng",
+        "yj.zuoRan": "Tác nhiễm",
+        "yj.guZhu": "Cổ chú",
+        "yj.zaoChuan": "Tạo thuyền",
+        "yj.geMi": "Cát mật",
+        "yj.zaiZhong": "Tài chủng",
+        "yj.quYu": "Thủ ngư",
+        "yj.jieWang": "Kết võng",
+        "yj.muYang": "Mục dưỡng",
+        "yj.anDuiWei": "An đối ngỗi",
+        "yj.xiYi": "Tập nghệ",
+        "yj.ruXue": "Nhập học",
+        "yj.liFa": "Lý phát (Cắt tóc)",
+        "yj.tanBing": "Thám bệnh",
+        "yj.jianGui": "Kiến quý",
+        "yj.chengChuan": "Thừa thuyền",
+        "yj.duShui": "Độ thủy",
+        "yj.zhenJiu": "Châm cứu",
+        "yj.chuXing": "Xuất hành",
+        "yj.yiXi": "Di tước",
+        "yj.fenJu": "Phân cư",
+        "yj.TiTou": "Thế đầu",
+        "yj.zhengShou": "Chỉnh thủ túc giáp",
+        "yj.naChu": "Nạp súc",
+        "yj.buZhuo": "Bổ tróc",
+        "yj.tianLie": "Điền liệp",
+        "yj.jiaoNiuMa": "Giáo ngưu mã",
+        "yj.huiQinYou": "Hội thân hữu",
+        "yj.fuRen": "Phó nhậm",
+        "yj.qiuYi": "Cầu y",
+        "yj.zhiBing": "Trị bệnh",
+        "yj.ciSong": "Từ tụng",
+        "yj.qiJiDongTu": "Khởi cơ động thổ",
+        "yj.poWuHuaiYuan": "Phá ốc hoại viên",
+        "yj.gaiWu": "Cái ốc",
+        "yj.zaoCangKu": "Tạo thương khố",
+        "yj.liQuanJiaoYi": "Lập khoán giao dịch",
+        "yj.jiaoYi": "Giao dịch",
+        "yj.liQuan": "Lập khoán",
+        "yj.anJi": "An cơ",
+        "yj.huiYou": "Hội hữu",
+        "yj.qiuYiLiaoBing": "Cầu y liệu bệnh",
+        "yj.zhuShi": "Chư sự bất nghi",
+        "yj.yuShi": "Dư sự vật thủ",
+        "yj.xingSang": "Hành tang",
+        "yj.duanYi": "Đoạn nghĩ",
+        "yj.guiXiu": "Quy tụ",
+        "sn.qingLong": "Thanh Long",
+        "sn.baiHu": "Bạch Hổ",
+        "sn.zhuQue": "Chu Tước",
+        "sn.xuanWu": "Huyền Vũ",
+        "sn.mingTang": "Minh Đường",
+        "sn.tianXing": "Thiên Hình",
+        "sn.tianDe": "Thiên Đức",
+        "sn.jinKui": "Kim Quỹ",
+        "sn.yuTang": "Ngọc Đường",
+        "sn.siMing": "Tư Mệnh",
+        "sn.tianLao": "Thiên Lao",
+        "sn.gouChen": "Câu Trận",
+        "sn.tianEn": "Thiên Ân",
+        "sn.muCang": "Mẫu Thương",
+        "sn.shiYang": "Thời Dương",
+        "sn.shengQi": "Sinh Khí",
+        "sn.yiHou": "Ích Hậu",
+        "sn.zaiSha": "Tai Sát",
+        "sn.tianHuo": "Thiên Hỏa",
+        "sn.siJi": "Tứ Kỵ",
+        "sn.baLong": "Bát Long",
+        "sn.fuRi": "Phục Nhật",
+        "sn.xuShi": "Tục Thế",
+        "sn.yueSha": "Nguyệt Sát",
+        "sn.yueXu": "Nguyệt Hư",
+        "sn.xueZhi": "Huyết Chi",
+        "sn.tianZei": "Thiên Tặc",
+        "sn.wuXu": "Ngũ Hư",
+        "sn.tuFu": "Thổ Phù",
+        "sn.guiJi": "Quy Kỵ",
+        "sn.xueJi": "Huyết Kỵ",
+        "sn.yueDe": "Nguyệt Đức",
+        "sn.yueEn": "Nguyệt Ân",
+        "sn.siXiang": "Tứ Tương",
+        "sn.wangRi": "Vương Nhật",
+        "sn.tianCang": "Thiên Thương",
+        "sn.buJiang": "Bất Tương",
+        "sn.wuHe": "Ngũ Hợp",
+        "sn.mingFeiDui": "Minh Phệ Đối",
+        "sn.yueJian": "Nguyệt Kiến",
+        "sn.xiaoShi": "Tiểu Thời",
+        "sn.tuHu": "Thổ Phủ",
+        "sn.wangWang": "Vãng Vong",
+        "sn.yaoAn": "Yếu An",
+        "sn.siShen": "Tử Thần",
+        "sn.tianMa": "Thiên Mã",
+        "sn.jiuHu": "Cửu Hổ",
+        "sn.qiNiao": "Thất Điểu",
+        "sn.liuShe": "Lục Xà",
+        "sn.guanRi": "Quan Nhật",
+        "sn.jiQi": "Cát Kỳ",
+        "sn.yuYu": "Ngọc Vũ",
+        "sn.daShi": "Đại Thời",
+        "sn.daBai": "Đại Bại",
+        "sn.xianChi": "Hàm Trì",
+        "sn.shouRi": "Thủ Nhật",
+        "sn.tianWu": "Thiên Vu",
+        "sn.fuDe": "Phúc Đức",
+        "sn.liuYi": "Lục Nghi",
+        "sn.jinTang": "Kim Đường",
+        "sn.yanDui": "Yểm Đối",
+        "sn.zhaoYao": "Chiêu Dao",
+        "sn.jiuKong": "Cửu Không",
+        "sn.jiuKan": "Cửu Khảm",
+        "sn.jiuJiao": "Cửu Tiêu",
+        "sn.xiangRi": "Tương Nhật",
+        "sn.baoGuang": "Bảo Quang",
+        "sn.tianGang": "Thiên Cương",
+        "sn.yueXing": "Nguyệt Hình",
+        "sn.yueHai": "Nguyệt Hại",
+        "sn.youHuo": "Du Họa",
+        "sn.chongRi": "Trùng Nhật",
+        "sn.shiDe": "Thời Đức",
+        "sn.minRi": "Dân Nhật",
+        "sn.sanHe": "Tam Hợp",
+        "sn.linRi": "Lâm Nhật",
+        "sn.shiYin": "Thời Âm",
+        "sn.mingFei": "Minh Phệ",
+        "sn.siQi": "Tử Khí",
+        "sn.diNang": "Địa Nang",
+        "sn.yueDeHe": "Nguyệt Đức Hợp",
+        "sn.jingAn": "Kính An",
+        "sn.puHu": "Phổ Hộ",
+        "sn.jieShen": "Giải Thần",
+        "sn.xiaoHao": "Tiểu Hao",
+        "sn.tianDeHe": "Thiên Đức Hợp",
+        "sn.yueKong": "Nguyệt Không",
+        "sn.yiMa": "Dịch Mã",
+        "sn.tianHou": "Thiên Hậu",
+        "sn.chuShen": "Trừ Thần",
+        "sn.yuePo": "Nguyệt Phá",
+        "sn.daHao": "Đại Hao",
+        "sn.wuLi": "Ngũ Ly",
+        "sn.yinDe": "Âm Đức",
+        "sn.fuSheng": "Phúc Sinh",
+        "sn.tianLi": "Thiên Lại",
+        "sn.zhiSi": "Trí Tử",
+        "sn.yuanWu": "Nguyên Vũ",
+        "sn.yangDe": "Dương Đức",
+        "sn.tianXi": "Thiên Hỷ",
+        "sn.tianYi": "Thiên Y",
+        "sn.yueYan": "Nguyệt Yểm",
+        "sn.diHuo": "Địa Hỏa",
+        "sn.fourHit": "Tứ Kích",
+        "sn.daSha": "Đại Sát",
+        "sn.daHui": "Đại Hội",
+        "sn.tianYuan": "Thiên Nguyện",
+        "sn.liuHe": "Lục Hợp",
+        "sn.wuFu": "Ngũ Phú",
+        "sn.shengXin": "Thánh Tâm",
+        "sn.heKui": "Hà Khôi",
+        "sn.jieSha": "Kiếp Sát",
+        "sn.siQiong": "Tứ Cùng",
+        "sn.chuShuiLong": "Xúc Thủy Long",
+        "sn.baFeng": "Bát Phong",
+        "sn.tianShe": "Thiên Xá",
+        "sn.wuMu": "Ngũ Mộ",
+        "sn.baZhuan": "Bát Chuyên",
+        "sn.yinCuo": "Âm Thác",
+        "sn.siHao": "Tứ Hao",
+        "sn.yangCuo": "Dương Thác",
+        "sn.siFei": "Tứ Phế",
+        "sn.sanYin": "Tam Âm",
+        "sn.xiaoHui": "Tiểu Hội",
+        "sn.yinDaoChongYang": "Âm Đạo Trùng Dương",
+        "sn.danYin": "Đơn Âm",
+        "sn.guChen": "Cô Thần",
+        "sn.yinWei": "Âm Vị",
+        "sn.xingHen": "Hành Hận",
+        "sn.liaoLi": "Liễu Lệ",
+        "sn.jueYin": "Tuyệt Âm",
+        "sn.chunYang": "Thuần Dương",
+        "sn.suiBo": "Tuế Bạc",
+        "sn.yinYangJiaoPo": "Âm Dương Giao Phá",
+        "sn.yinYangJuCuo": "Âm Dương Câu Thác",
+        "sn.yinYangJiChong": "Âm Dương Kích Trùng",
+        "sn.zhuZhen": "Trục Trận",
+        "sn.yangCuoYinChong": "Dương Thác Âm Trùng",
+        "sn.qiFu": "Thất Phù",
+        "sn.tianGou": "Thiên Cẩu",
+        "sn.chengRi": "Thành Nhật",
+        "sn.tianFu": "Thiên Phù",
+        "sn.guYang": "Cô Dương",
+        "sn.jueYang": "Tuyệt Dương",
+        "sn.chunYin": "Thuần Âm",
+        "sn.yinShen": "Âm Thần",
+        "sn.jieChu": "Giải Trừ",
+        "sn.yangPoYinChong": "Dương Phá Âm Trùng",
+        "sn.sanSang": "Tam Tang",
+        "sn.guiKu": "Quỷ Khốc",
+        "sn.daTui": "Đại Thoái",
+        "sn.siLi": "Tứ Ly",
+      },
       chs: {
         "tg.jia": "甲",
         "tg.yi": "乙",
@@ -10964,6 +11853,39 @@
             return _getMessage($1);
           });
         }
+      }
+      if (c === "LunarUtil" && _lang === "vi") {
+        var pzg = [
+          "",
+          "Giáp không mở kho của cải hao tán",
+          "Ất không trồng trọt nghìn cây không lớn",
+          "Bính không sửa bếp ắt gặp tai ương",
+          "Đinh không cắt tóc đầu sinh mụn nhọt",
+          "Mậu không nhận ruộng chủ ruộng bất an",
+          "Kỷ không xé văn tự đôi bên cùng mất",
+          "Canh không se chỉ máy dệt giăng không",
+          "Tân không làm tương chủ không được nếm",
+          "Nhâm không tháo nước khó bề đề phòng",
+          "Quý không kiện tụng lý yếu địch mạnh",
+        ];
+        var pzz = [
+          "",
+          "Tý không bói toán tự rước tai ương",
+          "Sửu không đội mũ chủ gặp chẳng lành",
+          "Dần không tế tự quỷ thần không hưởng",
+          "Mão không đào giếng nước chẳng ngọt trong",
+          "Thìn không khóc lóc ắt phạm trùng tang",
+          "Tỵ không đi xa của cải tiêu tan",
+          "Ngọ không lợp mái chủ nhà đổi dời",
+          "Mùi không uống thuốc độc khí ngấm sâu",
+          "Thân không kê giường quỷ quái vào phòng",
+          "Dậu không đón khách say xỉn cuồng điên",
+          "Tuất không ăn chó phát điên phát cuồng",
+          "Hợi không cưới hỏi ắt hại cô dâu",
+        ];
+        for (var pi = 0; pi < pzg.length; pi++) o["PENGZU_GAN"][pi] = pzg[pi];
+        for (var pzi = 0; pzi < pzz.length; pzi++)
+          o["PENGZU_ZHI"][pzi] = pzz[pzi];
       }
     };
 
