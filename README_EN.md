@@ -2,7 +2,7 @@
 
 [Tiếng Việt](README.md) | English
 
-A **zero-dependency** JavaScript / TypeScript calendar library tailored for **Vietnamese Lunar–Solar conversion**, Can-Chi (Heavenly Stems & Earthly Branches), **12 Vietnamese Zodiac Animals (`Mão = Cat`)**, 24 Solar Terms (_Tiết khí_), Five Elements (_Nạp âm_), auspicious/inauspicious activities (_Việc nên làm / Kiêng kỵ_), and Eight Characters (_Bát tự_).
+A zero-dependency JavaScript / TypeScript calendar library tailored for Vietnamese Lunar–Solar conversion.
 
 Maintained by [**congtruongwr**](https://github.com/congtruongwr/lunar-vietnamese) under **Apache-2.0**.
 
