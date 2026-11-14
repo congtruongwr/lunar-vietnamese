@@ -1,3 +1,9 @@
+/*!
+ * lunar-vietnamese v2.0.0
+ * Copyright (c) 2026 congtruongwr
+ * Licensed under the Apache License, Version 2.0
+ * https://github.com/congtruongwr/lunar-vietnamese
+ */
 (function (root, factory) {
   if (typeof define === "function" && define.amd) {
     define(factory);
@@ -601,8 +607,12 @@
           if (lunar.getMonth() === 8 && lunar.getDay() === 15) {
             return 3;
           }
-          // 清明
-          if ("清明" === lunar.getJieQi()) {
+          var jieQi = lunar.getJieQi();
+          if (
+            "清明" === jieQi ||
+            "Thanh Minh" === jieQi ||
+            "Fresh Green" === jieQi
+          ) {
             return 3;
           }
           var holiday = HolidayUtil.getHoliday(
@@ -647,31 +657,29 @@
         baseYear = 1900;
       }
       var l = [];
-      // 月地支距寅月的偏移值
-      var m = LunarUtil.index(monthGanZhi.substring(1), LunarUtil.ZHI, -1) - 2;
+      var yg = _splitGz(yearGanZhi);
+      var mg = _splitGz(monthGanZhi);
+      var tg = _splitGz(timeGanZhi);
+      var m = LunarUtil.index(mg[1], LunarUtil.ZHI, -1) - 2;
       if (m < 0) {
         m += 12;
       }
-      // 月天干要一致
       if (
-        ((LunarUtil.index(yearGanZhi.substring(0, 1), LunarUtil.GAN, -1) + 1) *
+        ((LunarUtil.index(yg[0], LunarUtil.GAN, -1) + 1) *
           2 +
           m) %
           10 !==
-        LunarUtil.index(monthGanZhi.substring(0, 1), LunarUtil.GAN, -1)
+        LunarUtil.index(mg[0], LunarUtil.GAN, -1)
       ) {
         return l;
       }
-      // 1年的立春是辛酉，序号57
       var y = LunarUtil.getJiaZiIndex(yearGanZhi) - 57;
       if (y < 0) {
         y += 60;
       }
       y++;
-      // 节令偏移值
       m *= 2;
-      // 时辰地支转时刻，子时按零点算
-      var h = LunarUtil.index(timeGanZhi.substring(1), LunarUtil.ZHI, -1) * 2;
+      var h = LunarUtil.index(tg[1], LunarUtil.ZHI, -1) * 2;
       var hours = [h];
       if (0 === h && 2 === sect) {
         hours = [0, 23];
@@ -1339,7 +1347,10 @@
         },
         getMonthInChinese: function () {
           var month = this._p.month;
-          return (month < 0 ? "闰" : "") + LunarUtil.MONTH[Math.abs(month)];
+          return (
+            (month < 0 ? _langPick("Nhuận ", "Leap ", "闰") : "") +
+            LunarUtil.MONTH[Math.abs(month)]
+          );
         },
         getDayInChinese: function () {
           return LunarUtil.DAY[this._p.day];
@@ -2925,13 +2936,13 @@
           return this.getYear() + "." + this.getMonth() + "." + this.getIndex();
         },
         toFullString: function () {
-          return (
-            this.getYear() +
-            "年" +
-            this.getMonth() +
-            "月第" +
-            this.getIndex() +
-            "周"
+          var y = this.getYear();
+          var m = this.getMonth();
+          var w = this.getIndex();
+          return _langPick(
+            "Năm " + y + " Tháng " + m + " Tuần " + w,
+            "Year " + y + " Month " + m + " Week " + w,
+            y + "年" + m + "月第" + w + "周",
           );
         },
       };
@@ -3039,7 +3050,13 @@
           return this.getYear() + "-" + this.getMonth();
         },
         toFullString: function () {
-          return this.getYear() + "年" + this.getMonth() + "月";
+          var y = this.getYear();
+          var m = this.getMonth();
+          return _langPick(
+            "Năm " + y + " Tháng " + m,
+            "Year " + y + " Month " + m,
+            y + "年" + m + "月",
+          );
         },
       };
     };
@@ -3118,7 +3135,13 @@
           return this.getYear() + "." + this.getIndex();
         },
         toFullString: function () {
-          return this.getYear() + "年" + this.getIndex() + "季度";
+          var y = this.getYear();
+          var q = this.getIndex();
+          return _langPick(
+            "Năm " + y + " Quý " + q,
+            "Year " + y + " Q" + q,
+            y + "年" + q + "季度",
+          );
         },
       };
     };
@@ -3197,8 +3220,12 @@
           return this.getYear() + "." + this.getIndex();
         },
         toFullString: function () {
-          return (
-            this.getYear() + "年" + ["上", "下"][this.getIndex() - 1] + "半年"
+          var y = this.getYear();
+          var h = this.getIndex() - 1;
+          return _langPick(
+            ["Nửa đầu", "Nửa cuối"][h] + " năm " + y,
+            ["First half of ", "Second half of "][h] + y,
+            y + "年" + ["上", "下"][h] + "半年",
           );
         },
       };
@@ -3250,7 +3277,8 @@
           return this.getYear() + "";
         },
         toFullString: function () {
-          return this.getYear() + "年";
+          var y = this.getYear();
+          return _langPick("Năm " + y, "Year " + y, y + "年");
         },
       };
     };
@@ -3357,7 +3385,7 @@
           return LunarUtil.ZHI[this._p.zhiIndex + 1];
         },
         getGanZhi: function () {
-          return this.getGan() + this.getZhi();
+          return _joinGz(this.getGan(), this.getZhi());
         },
         getJieQiJulianDays: function () {
           return this._p.jieQiJulianDays;
@@ -3529,7 +3557,8 @@
           return this.getYear() + "";
         },
         toFullString: function () {
-          return this.getYear() + "年";
+          var y = this.getYear();
+          return _langPick("Năm " + y, "Year " + y, y + "年");
         },
         next: function (years) {
           var oy = years;
@@ -3706,7 +3735,7 @@
           return LunarUtil.ZHI[this._p.zhiIndex + 1];
         },
         getGanZhi: function () {
-          return this.getGan() + this.getZhi();
+          return _joinGz(this.getGan(), this.getZhi());
         },
         getYear: function () {
           return this._p.year;
@@ -3727,19 +3756,19 @@
           return LunarUtil.POSITION_XI[this.getGanIndex() + 1];
         },
         getPositionXiDesc: function () {
-          return LunarUtil.POSITION_DESC.get(this.getPositionXi());
+          return LunarUtil.POSITION_DESC[this.getPositionXi()];
         },
         getPositionYangGui: function () {
           return LunarUtil.POSITION_YANG_GUI[this.getGanIndex() + 1];
         },
         getPositionYangGuiDesc: function () {
-          return LunarUtil.POSITION_DESC.get(this.getPositionYangGui());
+          return LunarUtil.POSITION_DESC[this.getPositionYangGui()];
         },
         getPositionYinGui: function () {
           return LunarUtil.POSITION_YIN_GUI[this.getGanIndex() + 1];
         },
         getPositionYinGuiDesc: function () {
-          return LunarUtil.POSITION_DESC.get(this.getPositionYinGui());
+          return LunarUtil.POSITION_DESC[this.getPositionYinGui()];
         },
         getPositionFu: function (sect) {
           return (1 === sect ? LunarUtil.POSITION_FU : LunarUtil.POSITION_FU_2)[
@@ -3747,13 +3776,13 @@
           ];
         },
         getPositionFuDesc: function (sect) {
-          return LunarUtil.POSITION_DESC.get(this.getPositionFu(sect));
+          return LunarUtil.POSITION_DESC[this.getPositionFu(sect)];
         },
         getPositionCai: function () {
           return LunarUtil.POSITION_CAI[this.getGanIndex() + 1];
         },
         getPositionCaiDesc: function () {
-          return LunarUtil.POSITION_DESC.get(this.getPositionCai());
+          return LunarUtil.POSITION_DESC[this.getPositionCai()];
         },
         getPositionTaiSui: function () {
           var p;
@@ -3762,17 +3791,17 @@
             case 1:
             case 5:
             case 9:
-              p = "艮";
+              p = I18n.getMessage("bg.gen");
               break;
             case 3:
             case 7:
             case 11:
-              p = "坤";
+              p = I18n.getMessage("bg.kun");
               break;
             case 4:
             case 8:
             case 12:
-              p = "巽";
+              p = I18n.getMessage("bg.xun");
               break;
             default:
               p =
@@ -3866,14 +3895,28 @@
           }
         },
         toString: function () {
-          return (
-            this.getYear() +
-            "年" +
-            (this.isLeap() ? "闰" : "") +
-            LunarUtil.MONTH[Math.abs(this.getMonth())] +
-            "月(" +
-            this.getDayCount() +
-            ")天"
+          var y = this.getYear();
+          var mName = LunarUtil.MONTH[Math.abs(this.getMonth())];
+          var d = this.getDayCount();
+          var leap = this.isLeap();
+          return _langPick(
+            "Năm " +
+              y +
+              " Tháng " +
+              (leap ? "Nhuận " : "") +
+              mName +
+              " (" +
+              d +
+              " ngày)",
+            "Year " +
+              y +
+              " Month " +
+              (leap ? "Leap " : "") +
+              mName +
+              " (" +
+              d +
+              " days)",
+            y + "年" + (leap ? "闰" : "") + mName + "月(" + d + ")天",
           );
         },
       };
@@ -7757,9 +7800,9 @@
           return LunarUtil.ZHI_HIDE_GAN[this.getYearZhi()];
         },
         getYearWuXing: function () {
-          return (
-            LunarUtil.WU_XING_GAN[this.getYearGan()] +
-            LunarUtil.WU_XING_ZHI[this.getYearZhi()]
+          return _joinGz(
+            LunarUtil.WU_XING_GAN[this.getYearGan()],
+            LunarUtil.WU_XING_ZHI[this.getYearZhi()],
           );
         },
         getYearNaYin: function () {
@@ -7811,9 +7854,9 @@
           return LunarUtil.ZHI_HIDE_GAN[this.getMonthZhi()];
         },
         getMonthWuXing: function () {
-          return (
-            LunarUtil.WU_XING_GAN[this.getMonthGan()] +
-            LunarUtil.WU_XING_ZHI[this.getMonthZhi()]
+          return _joinGz(
+            LunarUtil.WU_XING_GAN[this.getMonthGan()],
+            LunarUtil.WU_XING_ZHI[this.getMonthZhi()],
           );
         },
         getMonthNaYin: function () {
@@ -7859,16 +7902,16 @@
           return LunarUtil.ZHI_HIDE_GAN[this.getDayZhi()];
         },
         getDayWuXing: function () {
-          return (
-            LunarUtil.WU_XING_GAN[this.getDayGan()] +
-            LunarUtil.WU_XING_ZHI[this.getDayZhi()]
+          return _joinGz(
+            LunarUtil.WU_XING_GAN[this.getDayGan()],
+            LunarUtil.WU_XING_ZHI[this.getDayZhi()],
           );
         },
         getDayNaYin: function () {
           return LunarUtil.NAYIN[this.getDay()];
         },
         getDayShiShenGan: function () {
-          return "日主";
+          return _langPick("Nhật chủ", "Day Master", "日主");
         },
         getDayShiShenZhi: function () {
           var dayGan = this.getDayGan();
@@ -7905,9 +7948,9 @@
           return LunarUtil.ZHI_HIDE_GAN[this.getTimeZhi()];
         },
         getTimeWuXing: function () {
-          return (
-            LunarUtil.WU_XING_GAN[this.getTimeGan()] +
-            LunarUtil.WU_XING_ZHI[this.getTimeZhi()]
+          return _joinGz(
+            LunarUtil.WU_XING_GAN[this.getTimeGan()],
+            LunarUtil.WU_XING_ZHI[this.getTimeZhi()],
           );
         },
         getTimeNaYin: function () {
@@ -7943,7 +7986,10 @@
           if (zhiIndex >= 12) {
             zhiIndex -= 12;
           }
-          return LunarUtil.GAN[ganIndex + 1] + LunarUtil.ZHI[zhiIndex + 1];
+          return _joinGz(
+            LunarUtil.GAN[ganIndex + 1],
+            LunarUtil.ZHI[zhiIndex + 1],
+          );
         },
         getTaiYuanNaYin: function () {
           return LunarUtil.NAYIN[this.getTaiYuan()];
@@ -7958,7 +8004,10 @@
             2 === this._p.sect
               ? lunar.getDayZhiIndexExact2()
               : lunar.getDayZhiIndexExact();
-          return LunarUtil.HE_GAN_5[ganIndex] + LunarUtil.HE_ZHI_6[zhiIndex];
+          return _joinGz(
+            LunarUtil.HE_GAN_5[ganIndex],
+            LunarUtil.HE_ZHI_6[zhiIndex],
+          );
         },
         getTaiXiNaYin: function () {
           return LunarUtil.NAYIN[this.getTaiXi()];
@@ -7981,7 +8030,10 @@
           while (ganIndex > 10) {
             ganIndex -= 10;
           }
-          return LunarUtil.GAN[ganIndex] + LunarUtil.MONTH_ZHI[offset];
+          return _joinGz(
+            LunarUtil.GAN[ganIndex],
+            LunarUtil.MONTH_ZHI[offset],
+          );
         },
         getMingGongNaYin: function () {
           return LunarUtil.NAYIN[this.getMingGong()];
@@ -8006,7 +8058,10 @@
           while (ganIndex > 10) {
             ganIndex -= 10;
           }
-          return LunarUtil.GAN[ganIndex] + LunarUtil.MONTH_ZHI[offset];
+          return _joinGz(
+            LunarUtil.GAN[ganIndex],
+            LunarUtil.MONTH_ZHI[offset],
+          );
         },
         getShenGongNaYin: function () {
           return LunarUtil.NAYIN[this.getShenGong()];
@@ -8097,7 +8152,7 @@
                   LunarUtil.ZHI[
                     ((this._p.index + LunarUtil.BASE_MONTH_ZHI_INDEX) % 12) + 1
                   ];
-                return gan + zhi;
+                return _joinGz(gan, zhi);
               },
               getXun: function () {
                 return LunarUtil.getXun(this.getGanZhi());
@@ -8411,7 +8466,7 @@
           return LunarUtil.ZHI[this._p.zhiIndex + 1];
         },
         getGanZhi: function () {
-          return this.getGan() + this.getZhi();
+          return _joinGz(this.getGan(), this.getZhi());
         },
         getShengXiao: function () {
           return LunarUtil.SHENGXIAO[this._p.zhiIndex + 1];
@@ -8481,11 +8536,14 @@
           return "";
         },
         getChongDesc: function () {
+          var sep = "vi" === I18n.getLanguage() ? " " : "";
           return (
             "(" +
             this.getChongGan() +
+            sep +
             this.getChong() +
             ")" +
+            sep +
             this.getChongShengXiao()
           );
         },
@@ -12063,6 +12121,38 @@
       },
     };
   })();
+  function _langPick(vi, en, chs) {
+    var lang = I18n.getLanguage();
+    if ("vi" === lang) {
+      return vi;
+    }
+    if ("en" === lang) {
+      return en;
+    }
+    return chs;
+  }
+
+  function _joinGz(gan, zhi) {
+    return gan + ("vi" === I18n.getLanguage() ? " " : "") + zhi;
+  }
+
+  function _splitGz(gz) {
+    if (!gz) {
+      return ["", ""];
+    }
+    var spaceIdx = gz.indexOf(" ");
+    if (spaceIdx > 0) {
+      return [gz.substring(0, spaceIdx), gz.substring(spaceIdx + 1)];
+    }
+    for (var i = 1; i < LunarUtil.GAN.length; i++) {
+      var g = LunarUtil.GAN[i];
+      if (g && 0 === gz.indexOf(g) && gz.length > g.length) {
+        return [g, gz.substring(g.length)];
+      }
+    }
+    return [gz.substring(0, 1), gz.substring(1)];
+  }
+
   return {
     ShouXingUtil: ShouXingUtil,
     SolarUtil: SolarUtil,
