@@ -12,16 +12,33 @@ Phát triển và duy trì bởi [**congtruongwr**](https://github.com/congtruon
 
 ## Cài đặt
 
-### Node.js / npm
+### Node.js / npm (qua GitHub)
 
 ```bash
-npm install lunar-vietnamese
+npm install github:congtruongwr/lunar-vietnamese#v2.0.0
 ```
 
 ### Trình duyệt (CDN / Local)
 
+#### `<script>` (UMD Global)
+
 ```html
-<script src="https://cdn.jsdelivr.net/npm/lunar-vietnamese@2.0.0/lunar.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@v2.0.0/lunar.min.js"></script>
+<script>
+  const dl = DuongLich.fromYmd(2026, 2, 17);
+  console.log(dl.getAmLich().getCanChiNam()); // "Bính Ngọ"
+</script>
+```
+
+#### `<script type="module">` (ESM qua esm.sh)
+
+```html
+<script type="module">
+  import { DuongLich, AmLich } from "https://esm.sh/gh/congtruongwr/lunar-vietnamese@v2.0.0";
+
+  const dl = DuongLich.fromYmd(2026, 2, 17);
+  console.log(dl.getAmLich().toString()); // "Mùng Một tháng Giêng năm Hai Không Hai Sáu"
+</script>
 ```
 
 ## Sử dụng nhanh
