@@ -8,9 +8,9 @@ Maintained by [**congtruongwr**](https://github.com/congtruongwr/lunar-vietnames
 
 ## What's New in v2.0.0
 
-- **First-class Vietnamese API**: Exports native Vietnamese classes (`DuongLich`, `AmLich`, `BatTu`, `CuuTinh`, `PhatLich`, `DaoLich`, `DaNgonNgu`, etc.) and instance methods (`getAmLich()`, `getThu()`, `getCungHoangDao()`, `getCanChiNgay()`, `getConGiap()`, `getNapAmNgay()`, `getViecNenLam()`, `getViecKiengKy()`, etc.) while maintaining **100% backward compatibility** with `Solar` / `Lunar`.
-- **Complete `"vi"` Localization Parity**: Fixes leap month formatting (`"Nhuận ..."`), `LunarMonth` dictionary lookups (`POSITION_DESC`), Can-Chi spacing for NaYin lookups, Vietnamese period `toFullString()`, `Solar.fromBaZi(...)` with Vietnamese Can-Chi inputs (`"Bính Ngọ"`), and Thanh Minh holiday handling in `Solar.getSalaryRate()`.
-- **Production Bundle & Clean Packaging**: Ships pre-built `lunar.min.js` at repository root, full TypeScript declarations (`index.d.ts`), and targets Node.js `>= 18.0.0` with zero runtime/dev dependencies.
+- First-class Vietnamese API with 100% compatibility.
+- Complete localization across all lookup spaces.
+- Ready to use directly in the browser.
 
 ## Installation
 
