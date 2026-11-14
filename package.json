@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "node --test __tests__/PackageMeta.test.js __tests__/I18nVietnamese.test.js __tests__/LunarVietnameseOutput.test.js __tests__/TypeScriptDefinition.test.js"
+    "test": "node --test __tests__/PackageMeta.test.js __tests__/I18nVietnamese.test.js __tests__/LunarVietnameseOutput.test.js __tests__/VietnameseApiAliases.test.js __tests__/TypeScriptDefinition.test.js"
   },
   "repository": {
     "type": "git",

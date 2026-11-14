@@ -247,6 +247,15 @@
         getWeekInChinese: function () {
           return SolarUtil.WEEK[this.getWeek()];
         },
+        getAmLich: function () {
+          return this.getLunar();
+        },
+        getThu: function () {
+          return this.getWeekInChinese();
+        },
+        getCungHoangDao: function () {
+          return this.getXingZuo();
+        },
         /**
          * 获取当天的阳历周
          * @param start 星期几作为一周的开始，1234560分别代表星期一至星期天
@@ -1351,6 +1360,60 @@
             (month < 0 ? _langPick("Nhuận ", "Leap ", "闰") : "") +
             LunarUtil.MONTH[Math.abs(month)]
           );
+        },
+        getDuongLich: function () {
+          return this.getSolar();
+        },
+        getCanChiNam: function () {
+          return this.getYearInGanZhi();
+        },
+        getCanChiThang: function () {
+          return this.getMonthInGanZhi();
+        },
+        getCanChiNgay: function () {
+          return this.getDayInGanZhi();
+        },
+        getCanChiGio: function () {
+          return this.getTimeInGanZhi();
+        },
+        getConGiap: function () {
+          return this.getYearShengXiao();
+        },
+        getConGiapNam: function () {
+          return this.getYearShengXiao();
+        },
+        getConGiapThang: function () {
+          return this.getMonthShengXiao();
+        },
+        getConGiapNgay: function () {
+          return this.getDayShengXiao();
+        },
+        getConGiapGio: function () {
+          return this.getTimeShengXiao();
+        },
+        getTietKhi: function () {
+          return this.getJieQi();
+        },
+        getNapAmNam: function () {
+          return this.getYearNaYin();
+        },
+        getNapAmThang: function () {
+          return this.getMonthNaYin();
+        },
+        getNapAmNgay: function () {
+          return this.getDayNaYin();
+        },
+        getNapAmGio: function () {
+          return this.getTimeNaYin();
+        },
+        getBatTu: function () {
+          return this.getEightChar();
+        },
+        getViecNenLam: function (sect) {
+          return this.getDayYi(sect);
+        },
+        getViecKiengKy: function (sect) {
+          return this.getDayJi(sect);
         },
         getDayInChinese: function () {
           return LunarUtil.DAY[this._p.day];
@@ -12176,5 +12239,20 @@
     LunarTime: LunarTime,
     HolidayUtil: HolidayUtil,
     I18n: I18n,
+    DuongLich: Solar,
+    AmLich: Lunar,
+    BatTu: EightChar,
+    CuuTinh: NineStar,
+    PhatLich: Foto,
+    DaoLich: Tao,
+    TuanDuongLich: SolarWeek,
+    ThangDuongLich: SolarMonth,
+    QuyDuongLich: SolarSeason,
+    NuaNamDuongLich: SolarHalfYear,
+    NamDuongLich: SolarYear,
+    ThangAmLich: LunarMonth,
+    NamAmLich: LunarYear,
+    GioAmLich: LunarTime,
+    DaNgonNgu: I18n,
   };
 });
