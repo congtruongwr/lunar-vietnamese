@@ -1,82 +1,89 @@
-# lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+# lunar-vietnamese
 
-lunar-vietnamese is a zero-dependency calendar library for Solar and Vietnamese Lunar calendar.
+[Tiếng Việt](README.md) | English
 
-[Tiếng Việt](README.md)
+A **zero-dependency** JavaScript / TypeScript calendar library tailored for **Vietnamese Lunar–Solar conversion**, Can-Chi (Heavenly Stems & Earthly Branches), **12 Vietnamese Zodiac Animals (`Mão = Cat`)**, 24 Solar Terms (_Tiết khí_), Five Elements (_Nạp âm_), auspicious/inauspicious activities (_Việc nên làm / Kiêng kỵ_), and Eight Characters (_Bát tự_).
 
-## Example
+Maintained by [**congtruongwr**](https://github.com/congtruongwr/lunar-vietnamese) under **Apache-2.0**.
 
-### Normal Page (HTML / CDN)
+## What's New in v2.0.0
+
+- **First-class Vietnamese API**: Exports native Vietnamese classes (`DuongLich`, `AmLich`, `BatTu`, `CuuTinh`, `PhatLich`, `DaoLich`, `DaNgonNgu`, etc.) and instance methods (`getAmLich()`, `getThu()`, `getCungHoangDao()`, `getCanChiNgay()`, `getConGiap()`, `getNapAmNgay()`, `getViecNenLam()`, `getViecKiengKy()`, etc.) while maintaining **100% backward compatibility** with `Solar` / `Lunar`.
+- **Complete `"vi"` Localization Parity**: Fixes leap month formatting (`"Nhuận ..."`), `LunarMonth` dictionary lookups (`POSITION_DESC`), Can-Chi spacing for NaYin lookups, Vietnamese period `toFullString()`, `Solar.fromBaZi(...)` with Vietnamese Can-Chi inputs (`"Bính Ngọ"`), and Thanh Minh holiday handling in `Solar.getSalaryRate()`.
+- **Production Bundle & Clean Packaging**: Ships pre-built `lunar.min.js` at repository root, full TypeScript declarations (`index.d.ts`), and targets Node.js `>= 18.0.0` with zero runtime/dev dependencies.
+
+## Installation
+
+### npm / Node.js
+
+```bash
+npm install lunar-vietnamese
+```
+
+### Browser
 
 ```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <!-- Load minified script via jsDelivr CDN (~330KB, Recommended) -->
-    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.min.js"></script>
-    <!-- Or load full script: <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script> -->
-  </head>
-  <body>
-    <script>
-      var solar = Solar.fromYmd(1986, 5, 29);
-      console.log(solar.toFullString());
-      console.log(solar.getLunar().toFullString());
-    </script>
-  </body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/lunar-vietnamese@2.0.0/lunar.min.js"></script>
 ```
 
-### TypeScript / ES Modules
+## Quick Start
 
-Built-in type declarations (`index.d.ts`) are provided out of the box:
+### Vietnamese-Native API
 
-```typescript
-import { Solar, Lunar, I18n } from "lunar-vietnamese";
+```js
+const { DuongLich, AmLich } = require("lunar-vietnamese");
 
-const solar: Solar = Solar.fromYmd(1986, 5, 29);
-const lunar: Lunar = solar.getLunar();
+// Default language is "vi"
+const dl = DuongLich.fromYmd(2026, 2, 17); // Lunar New Year 2026 (Tết Bính Ngọ)
+const al = dl.getAmLich();
+
+console.log(dl.getThu()); // "Thứ Ba"
+console.log(dl.getCungHoangDao()); // "Bảo Bình"
+console.log(al.getCanChiNam()); // "Bính Ngọ"
+console.log(al.getConGiap()); // "Ngựa"
+console.log(al.getNapAmNgay()); // "Đại Hải Thủy"
+
+const fromLunar = AmLich.fromYmd(2026, 1, 1);
+console.log(fromLunar.getDuongLich().toYmd()); // "2026-02-17"
+```
+
+### Classic API (`Solar` / `Lunar`) & Multi-Language Switching
+
+```js
+const { Solar, Lunar, I18n } = require("lunar-vietnamese");
+
+const solar = Solar.fromYmd(2026, 10, 31);
+const lunar = solar.getLunar();
+
 console.log(solar.toFullString());
-console.log(lunar.toFullString());
+// 2026-10-31 00:00:00 Thứ Bảy (Đêm Halloween) Bọ Cạp
+
+console.log(lunar.toString());
+// Hai Mươi Hai tháng Chín năm Hai Không Hai Sáu
+
+// Switch between "vi" (default), "en", and "chs"
+I18n.setLanguage("en");
+console.log(Solar.fromYmd(2026, 2, 17).getLunar().getYearShengXiao());
+I18n.setLanguage("vi");
 ```
 
-### npm (via GitHub)
+### TypeScript
 
-Install directly from GitHub repository (no npmjs registry required):
+```ts
+import { DuongLich, AmLich, Solar, Lunar } from "lunar-vietnamese";
 
-    npm init -y
-    npm install github:congtruongwr/lunar-vietnamese
+const dl: DuongLich = DuongLich.fromYmd(2026, 10, 31);
+const al: AmLich = dl.getAmLich();
+const solar: Solar = al.getDuongLich();
+const lunar: Lunar = solar.getLunar();
+```
 
-    //test.js
-    const {Solar} = require('lunar-vietnamese')
+## Running Tests
 
-    let solar = Solar.fromYmd(1986,5,29);
-    console.log(solar.toFullString());
-    console.log(solar.getLunar().toFullString());
+```bash
+npm test
+```
 
-    node test.js
+## License
 
-### Node.js (Direct File)
-
-    //test.js
-    const {Solar} = require('./lunar.js')
-
-    let solar = Solar.fromYmd(1986,5,29);
-    console.log(solar.toFullString());
-    console.log(solar.getLunar().toFullString());
-
-    node test.js
-
-Output:
-
-    1986-05-29 00:00:00 Thứ Năm Song Tử
-    Hai Mươi Mốt tháng Tư năm Một Chín Tám Sáu năm Bính Dần(Hổ) tháng Quý Tỵ(Rắn) ngày Quý Dậu(Gà) giờ Tý(Chuột) Nạp âm[Lư Trung Hỏa Trường Lưu Thủy Kiếm Phong Kim Tang Đố Mộc] Thứ Năm Bắc phương Huyền Vũ Nhị thập bát tú[Đẩu Mộc Giải](Cát) Bành Tổ bách kỵ[Quý không kiện tụng lý yếu địch mạnh Dậu không đón khách say xỉn cuồng điên] Hỷ thần hướng[Tốn](Đông Nam) Dương quý thần hướng[Tốn](Đông Nam) Âm quý thần hướng[Chấn](Chính Đông) Phúc thần hướng[Cấn](Đông Bắc) Tài thần hướng[Ly](Chính Nam) Xung[(Đinh Mão) Mèo] Sát[Đông]
-
-## Documentation
-
-Please refer to [README.md](README.md) or visit [https://github.com/congtruongwr/lunar-vietnamese](https://github.com/congtruongwr/lunar-vietnamese) for detailed API usage and documentation.
-
-## License & Copyright
-
-Released under the [Apache License 2.0](LICENSE).
-Maintained and developed by **congtruongwr**.
+Copyright &copy; 2026 [congtruongwr](https://github.com/congtruongwr) — [Apache License 2.0](LICENSE).

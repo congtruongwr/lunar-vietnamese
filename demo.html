@@ -1,90 +1,189 @@
 <!doctype html>
 <html lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <title>Tra cứu Lịch Âm - Dương Việt Nam (lunar-vietnamese)</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>lunar-vietnamese v2.0.0 — Demo Lịch Âm Dương Thuần Việt</title>
     <style>
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-          Arial, sans-serif;
-        background: #0f172a;
-        color: #f8fafc;
-        padding: 40px;
-        line-height: 1.6;
+      :root {
+        --bg: #f7f5f0;
+        --surface: #ffffff;
+        --ink: #1f2421;
+        --muted: #5a635e;
+        --accent: #b83b2a;
+        --border: #e2ddd3;
+        --code-bg: #f1ede4;
       }
-      .card {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        padding: 24px;
-        margin-bottom: 24px;
-        backdrop-filter: blur(10px);
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans",
+          sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+        padding: 2rem 1rem 4rem;
+      }
+      .container {
+        max-width: 920px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--border);
       }
       h1 {
-        color: #38bdf8;
-        margin-top: 0;
+        margin: 0 0 0.4rem;
+        font-size: 1.9rem;
+        color: var(--accent);
       }
-      h2 {
-        color: #fbbf24;
-        margin-top: 0;
-        font-size: 1.25rem;
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
       }
-      .meta {
-        color: #94a3b8;
+      .grid {
+        display: grid;
+        gap: 1.25rem;
+      }
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        box-shadow: 0 2px 8px rgba(31, 36, 33, 0.04);
+      }
+      .card h2 {
+        margin: 0 0 0.65rem;
+        font-size: 1.2rem;
+      }
+      pre {
+        background: var(--code-bg);
+        padding: 0.85rem 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
         font-size: 0.9rem;
+        margin: 0.5rem 0 0.9rem;
       }
-      .output {
-        color: #e2e8f0;
-        font-size: 1rem;
-        margin-top: 8px;
-        word-break: break-word;
+      .result {
+        padding: 0.75rem 1rem;
+        border-left: 4px solid var(--accent);
+        background: #fcfaf6;
+        border-radius: 4px;
+        font-size: 0.95rem;
+      }
+      .result p {
+        margin: 0.25rem 0;
+      }
+      footer {
+        margin-top: 2rem;
+        color: var(--muted);
+        font-size: 0.88rem;
+        text-align: center;
       }
     </style>
   </head>
   <body>
-    <h1>Lịch Âm - Dương Việt Nam (lunar-vietnamese)</h1>
-    <p class="meta">
-      Phát triển và duy trì bởi <strong>congtruongwr</strong> trên nhánh
-      <code>main</code>
-    </p>
+    <main class="container">
+      <header>
+        <h1>lunar-vietnamese v2.0.0</h1>
+        <p class="subtitle">
+          Thư viện tra cứu Lịch Âm - Dương, Can Chi, Tiết khí, Con giáp, Bát tự
+          thuần Việt của congtruongwr.
+        </p>
+      </header>
 
-    <div class="card">
-      <h2>1. Ngày hiện tại (Hôm nay)</h2>
-      <div id="today-lunar" class="output"></div>
-      <div
-        id="today-solar"
-        class="output"
-        style="color: #38bdf8; margin-top: 10px"
-      ></div>
-    </div>
+      <section class="grid">
+        <article class="card">
+          <h2>1. Dương lịch sang Âm lịch (2026-10-31)</h2>
+          <pre><code>const solar = Solar.fromYmd(2026, 10, 31);
+const lunar = solar.getLunar();</code></pre>
+          <div class="result" id="card-1-output"></div>
+        </article>
 
-    <div class="card">
-      <h2>2. Tra cứu ngày chỉ định (Ví dụ: Tết 2026 Bính Ngọ)</h2>
-      <div id="sample-lunar" class="output"></div>
-      <div
-        id="sample-solar"
-        class="output"
-        style="color: #38bdf8; margin-top: 10px"
-      ></div>
-    </div>
+        <article class="card">
+          <h2>2. Tết 2026 Bính Ngọ (Mùng 1 tháng Giêng)</h2>
+          <pre><code>const tet = Lunar.fromYmd(2026, 1, 1);
+const duong = tet.getSolar();</code></pre>
+          <div class="result" id="card-2-output"></div>
+        </article>
 
-    <!-- Nhúng file cục bộ (hoặc nhúng trực tiếp CDN: https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.min.js) -->
-    <script src="lunar.js"></script>
+        <article class="card">
+          <h2>3. API Thuần Việt v2.0.0 (DuongLich / AmLich)</h2>
+          <pre><code>const dl = DuongLich.fromYmd(2026, 2, 17);
+const al = dl.getAmLich();</code></pre>
+          <div class="result" id="card-3-output"></div>
+        </article>
+      </section>
+
+      <footer>
+        Copyright &copy; 2026 congtruongwr &mdash; Apache License 2.0
+      </footer>
+    </main>
+
+    <script src="lunar.min.js"></script>
     <script>
-      // 1. Hôm nay
-      var today = Lunar.fromDate(new Date());
-      document.getElementById("today-lunar").innerHTML =
-        "<strong>Âm lịch:</strong> " + today.toFullString();
-      document.getElementById("today-solar").innerHTML =
-        "<strong>Dương lịch:</strong> " + today.getSolar().toFullString();
+      (function () {
+        DaNgonNgu.setLanguage("vi");
 
-      // 2. Tra cứu ngày chỉ định (1986-05-29)
-      var sample = Lunar.fromYmd(1986, 4, 21);
-      document.getElementById("sample-lunar").innerHTML =
-        "<strong>Âm lịch:</strong> " + sample.toFullString();
-      document.getElementById("sample-solar").innerHTML =
-        "<strong>Dương lịch:</strong> " + sample.getSolar().toFullString();
+        // Card 1: 2026-10-31
+        var solar = Solar.fromYmd(2026, 10, 31);
+        var lunar = solar.getLunar();
+        var card1 = document.getElementById("card-1-output");
+        card1.innerHTML =
+          "<p><strong>Dương lịch:</strong> " +
+          solar.toFullString() +
+          "</p>" +
+          "<p><strong>Âm lịch:</strong> " +
+          lunar.toFullString() +
+          "</p>";
+
+        // Card 2: Tết 2026 Bính Ngọ (1/1 Âm lịch 2026)
+        var tet = Lunar.fromYmd(2026, 1, 1);
+        var duongTet = tet.getSolar();
+        var card2 = document.getElementById("card-2-output");
+        card2.innerHTML =
+          "<p><strong>Ngày Âm lịch:</strong> " +
+          tet.toString() +
+          " (" +
+          tet.getYearInGanZhi() +
+          " - " +
+          tet.getYearShengXiao() +
+          ")</p>" +
+          "<p><strong>Ngày Dương tương ứng:</strong> " +
+          duongTet.toFullString() +
+          "</p>";
+
+        // Card 3: API Thuần Việt
+        var dl = DuongLich.fromYmd(2026, 2, 17);
+        var al = dl.getAmLich();
+        var card3 = document.getElementById("card-3-output");
+        card3.innerHTML =
+          "<p><strong>Thứ / Cung hoàng đạo:</strong> " +
+          dl.getThu() +
+          " &middot; " +
+          dl.getCungHoangDao() +
+          "</p>" +
+          "<p><strong>Can Chi:</strong> Năm " +
+          al.getCanChiNam() +
+          " (" +
+          al.getConGiap() +
+          "), Tháng " +
+          al.getCanChiThang() +
+          ", Ngày " +
+          al.getCanChiNgay() +
+          "</p>" +
+          "<p><strong>Nạp âm ngày:</strong> " +
+          al.getNapAmNgay() +
+          "</p>" +
+          "<p><strong>Việc nên làm:</strong> " +
+          al.getViecNenLam().slice(0, 5).join(", ") +
+          "</p>";
+      })();
     </script>
   </body>
 </html>

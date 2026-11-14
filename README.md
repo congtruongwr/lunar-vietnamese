@@ -1,125 +1,120 @@
-# lunar-vietnamese [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+# lunar-vietnamese
 
-Thư viện không phụ thuộc bên ngoài, chuyên dùng để tính toán và tra cứu:
+Thư viện JavaScript / TypeScript **không phụ thuộc (zero-dependency)** dành riêng cho Việt Nam giúp chuyển đổi và tra cứu **Lịch Âm - Dương**, **Can Chi**, **12 Con Giáp (chuẩn Việt Nam: Mão = Mèo)**, **24 Tiết Khí**, **Ngũ Hành Nạp Âm**, **Hoàng Đạo / Hắc Đạo**, **Việc nên làm / Kiêng kỵ**, và **Bát Tự (Tứ Trụ)**.
 
-- **Dương lịch (Solar)** & **Âm lịch Việt Nam (Lunar)**
-- **Can Chi, 12 Con Giáp** chuẩn văn hóa Việt Nam (**Mão = Mèo**, thay vì Thỏ như Trung Quốc)
-- **24 Tiết khí, 60 Hoa Giáp, Bát tự, Ngũ hành, Thập thần**
-- **Kiến trừ thập nhị trực, Nhị thập bát tú, Bát quái, Phương vị cát thần (Tài thần, Hỷ thần, Phúc thần)**
-- **Bành Tổ bách kỵ, Ngày giờ hoàng đạo/hắc đạo, Nạp âm, Xung sát**
+Phát triển và duy trì bởi [**congtruongwr**](https://github.com/congtruongwr/lunar-vietnamese) theo giấy phép **Apache-2.0**.
 
-Dự án được duy trì và phát triển bởi **congtruongwr** trên nhánh `main`.
+## Điểm mới ở v2.0.0
 
----
+- **API thuần Việt hạng nhất**: Xuất trực tiếp các lớp tiếng Việt (`DuongLich`, `AmLich`, `BatTu`, `CuuTinh`, `PhatLich`, `DaoLich`, `DaNgonNgu`, ...) và phương thức tiếng Việt (`getAmLich()`, `getThu()`, `getCungHoangDao()`, `getCanChiNgay()`, `getConGiap()`, `getNapAmNgay()`, `getViecNenLam()`, `getViecKiengKy()`, ...), giữ nguyên **tương thích ngược 100%** với `Solar` / `Lunar`.
+- **Hoàn thiện bản địa hóa `"vi"`**: Sửa hiển thị tháng nhuận (`"Nhuận ..."`), sửa tra cứu `LunarUtil.POSITION_DESC`, thêm khoảng trắng Can-Chi cho `Nạp Âm`, `Tuần`/`Quý`/`Năm` tiếng Việt, `Solar.fromBaZi(...)` hỗ trợ Can Chi tiếng Việt có dấu cách (`"Bính Ngọ"`), và ngày lễ Thanh Minh trong `getSalaryRate()`.
+- **Sẵn sàng dùng ngay trên trình duyệt**: Cung cấp sẵn `lunar.min.js` ở thư mục gốc, TypeScript definitions đầy đủ (`index.d.ts`), và yêu cầu Node.js `>= 18.0.0`.
 
-## 🚀 Cài Đặt & Sử Dụng
+## Cài đặt
 
-### 1. Trong Node.js / Modern Frontend (Cài đặt qua GitHub)
-
-Hiện tại thư viện được cài đặt trực tiếp qua kho lưu trữ GitHub (không cần tài khoản npmjs):
+### Node.js / npm
 
 ```bash
-# Cài đặt qua npm
-npm install github:congtruongwr/lunar-vietnamese
-
-# Hoặc qua Yarn / pnpm:
-yarn add github:congtruongwr/lunar-vietnamese
-pnpm add github:congtruongwr/lunar-vietnamese
+npm install lunar-vietnamese
 ```
 
-**Cách dùng với CommonJS (Node.js):**
-
-```javascript
-const { Solar, Lunar, I18n } = require("lunar-vietnamese");
-
-// Mặc định ngôn ngữ khởi tạo là tiếng Việt ('vi')
-const solar = Solar.fromYmd(2026, 10, 31);
-console.log(solar.toFullString());
-// Kết quả: 2026-10-31 00:00:00 Thứ Bảy (Đêm Halloween) Bọ Cạp
-
-const lunar = solar.getLunar();
-console.log(lunar.toFullString());
-// Kết quả: Hai Mươi Hai tháng Chín năm Hai Không Hai Sáu năm Bính Ngọ(Ngựa) tháng Mậu Tuất(Chó) ngày Mậu Dần(Hổ) giờ Tý(Chuột)...
-```
-
-**Cách dùng với ES Module (React, Vue, Vite, Next.js):**
-
-```javascript
-import { Solar, Lunar, I18n } from "lunar-vietnamese";
-```
-
-**Cách dùng với TypeScript (Next.js TS, Vite + TS, NestJS):**
-
-Thư viện tích hợp sẵn định nghĩa kiểu dữ liệu tĩnh qua `index.d.ts` mà không cần cài thêm gói `@types`:
-
-```typescript
-import { Solar, Lunar, I18n, EightChar, NineStar } from "lunar-vietnamese";
-
-const solar: Solar = Solar.fromYmd(2026, 10, 31);
-const lunar: Lunar = solar.getLunar();
-console.log(lunar.toFullString());
-```
-
-### 2. Sử dụng trực tiếp trên trình duyệt (HTML)
-
-Có thể nhúng trực tiếp qua CDN jsDelivr miễn phí từ GitHub (khuyến nghị dùng bản nén):
+### Trình duyệt (CDN / Local)
 
 ```html
-<!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <title>Tra cứu Âm Lịch Việt Nam</title>
-    <!-- Nhúng bản nén tối ưu (Khuyến nghị) -->
-    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.min.js"></script>
-    <!-- Hoặc nhúng bản đầy đủ:
-    <script src="https://cdn.jsdelivr.net/gh/congtruongwr/lunar-vietnamese@main/lunar.js"></script> -->
-  </head>
-  <body>
-    <script>
-      // Lấy ngày hiện tại
-      var today = Lunar.fromDate(new Date());
-      document.write("<h3>Âm lịch: " + today.toFullString() + "</h3>");
-      document.write(
-        "<p>Dương lịch: " + today.getSolar().toFullString() + "</p>",
-      );
-    </script>
-  </body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/lunar-vietnamese@2.0.0/lunar.min.js"></script>
 ```
 
-### 3. Đa ngôn ngữ (I18n)
+## Sử dụng nhanh
 
-Hỗ trợ chuyển đổi linh hoạt giữa 3 ngôn ngữ: tiếng Việt (`vi`), tiếng Trung giản thể (`chs`), và tiếng Anh (`en`):
+### 1. API Thuần Việt (khuyến nghị)
 
-```javascript
-const { I18n, Lunar } = require("lunar-vietnamese");
+```js
+const { DuongLich, AmLich, DaNgonNgu } = require("lunar-vietnamese");
 
-// Chuyển sang tiếng Anh
+// Ngôn ngữ mặc định đã là "vi"
+DaNgonNgu.setLanguage("vi");
+
+// Ví dụ: Mùng 1 Tết Bính Ngọ 2026 (17/02/2026 Dương lịch)
+const dl = DuongLich.fromYmd(2026, 2, 17);
+const al = dl.getAmLich();
+
+console.log(dl.getThu()); // "Thứ Ba"
+console.log(dl.getCungHoangDao()); // "Bảo Bình"
+console.log(al.toString()); // "Mùng Một tháng Giêng năm Hai Không Hai Sáu"
+console.log(al.getCanChiNam()); // "Bính Ngọ"
+console.log(al.getConGiap()); // "Ngựa"
+console.log(al.getCanChiNgay()); // "Nhâm Tuất"
+console.log(al.getNapAmNgay()); // "Đại Hải Thủy"
+console.log(al.getViecNenLam()); // ["Tế tự", "Tắc huyệt", ...]
+console.log(al.getViecKiengKy()); // ["Giá thú (Cưới hỏi)", "Nhập trạch", ...]
+
+// Chuyển ngược từ Âm lịch sang Dương lịch
+const ngayTet = AmLich.fromYmd(2026, 1, 1);
+console.log(ngayTet.getDuongLich().toYmd()); // "2026-02-17"
+```
+
+### 2. API Tương thích (`Solar` / `Lunar`)
+
+```js
+const { Solar, Lunar } = require("lunar-vietnamese");
+
+const solar = Solar.fromYmd(2026, 10, 31);
+const lunar = solar.getLunar();
+
+console.log(solar.toFullString());
+// 2026-10-31 00:00:00 Thứ Bảy (Đêm Halloween) Bọ Cạp
+
+console.log(lunar.getYearShengXiao(), lunar.getDayInGanZhi());
+// Ngựa Mậu Dần
+
+// Chuyển đổi đa ngôn ngữ runtime: "vi" | "en" | "chs"
+const { I18n } = require("lunar-vietnamese");
 I18n.setLanguage("en");
-console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
-
-// Chuyển sang tiếng Trung
-I18n.setLanguage("chs");
-console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
-
-// Chuyển lại tiếng Việt chuẩn
+console.log(Solar.fromYmd(2026, 2, 17).getLunar().getYearShengXiao());
 I18n.setLanguage("vi");
-console.log(Lunar.fromYmd(2026, 1, 1).toFullString());
 ```
 
----
+### 3. TypeScript
 
-## 🌟 Tính Năng Đặc Biệt Cho Việt Nam
+```ts
+import { DuongLich, AmLich, Solar, Lunar } from "lunar-vietnamese";
 
-1. **Chuẩn 12 Con Giáp**: Con giáp thứ tư trong chu kỳ địa chi là **Mão (Mèo)**, thay vì con Thỏ của Trung Quốc.
-2. **Ngôn ngữ mặc định**: Tự động hiển thị tiếng Việt chuẩn xác mà không cần cấu hình thêm.
-3. **Đầy đủ nạp âm & thuật ngữ phong thủy**: Hơn 803 thuật ngữ thiên văn cổ học Á Đông được bản địa hóa.
-4. **Sẵn Sàng Cho TypeScript & CDN Nén**: Hỗ trợ trực tiếp mọi dự án Website và App hiện đại.
+const dl: DuongLich = DuongLich.fromYmd(2026, 2, 17);
+const al: AmLich = dl.getAmLich();
+const solar: Solar = al.getDuongLich();
+const lunar: Lunar = solar.getLunar();
 
----
+console.log(al.getCanChiNgay(), lunar.getDayNaYin());
+```
 
-## 📄 Bản Quyền & Giấy Phép
+## Bảng ánh xạ lớp API Thuần Việt
 
-Phát hành dưới giấy phép [Apache License 2.0](LICENSE).
-Tác quyền duy trì và phát triển: **congtruongwr**.
+| Tên lớp Thuần Việt | Lớp chuẩn       | Mô tả                                |
+| ------------------ | --------------- | ------------------------------------ |
+| `DuongLich`        | `Solar`         | Ngày Dương lịch                      |
+| `AmLich`           | `Lunar`         | Ngày Âm lịch                         |
+| `BatTu`            | `EightChar`     | Tứ trụ / Bát tự                      |
+| `CuuTinh`          | `NineStar`      | Cửu tinh                             |
+| `PhatLich`         | `Foto`          | Phật lịch                            |
+| `DaoLich`          | `Tao`           | Đạo lịch                             |
+| `TuanDuongLich`    | `SolarWeek`     | Tuần Dương lịch                      |
+| `ThangDuongLich`   | `SolarMonth`    | Tháng Dương lịch                     |
+| `QuyDuongLich`     | `SolarSeason`   | Quý Dương lịch                       |
+| `NuaNamDuongLich`  | `SolarHalfYear` | Nửa năm Dương lịch                   |
+| `NamDuongLich`     | `SolarYear`     | Năm Dương lịch                       |
+| `ThangAmLich`      | `LunarMonth`    | Tháng Âm lịch                        |
+| `NamAmLich`        | `LunarYear`     | Năm Âm lịch                          |
+| `GioAmLich`        | `LunarTime`     | Giờ Âm lịch                          |
+| `DaNgonNgu`        | `I18n`          | Quản lý ngôn ngữ (`vi`, `en`, `chs`) |
+
+## Kiểm thử
+
+```bash
+npm test
+```
+
+## Tác giả & Giấy phép
+
+- **Chủ sở hữu:** [congtruongwr](https://github.com/congtruongwr)
+- **Kho mã nguồn:** [https://github.com/congtruongwr/lunar-vietnamese](https://github.com/congtruongwr/lunar-vietnamese)
+- **Giấy phép:** [Apache License 2.0](LICENSE)
