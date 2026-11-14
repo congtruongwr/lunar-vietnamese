@@ -1,14 +1,14 @@
 # lunar-vietnamese
 
-Thư viện JavaScript / TypeScript **không phụ thuộc (zero-dependency)** dành riêng cho Việt Nam giúp chuyển đổi và tra cứu **Lịch Âm - Dương**, **Can Chi**, **12 Con Giáp (chuẩn Việt Nam: Mão = Mèo)**, **24 Tiết Khí**, **Ngũ Hành Nạp Âm**, **Hoàng Đạo / Hắc Đạo**, **Việc nên làm / Kiêng kỵ**, và **Bát Tự (Tứ Trụ)**.
+Thư viện JavaScript / TypeScript không phụ thuộc bên ngoài dành riêng cho Việt Nam.
 
 Phát triển và duy trì bởi [**congtruongwr**](https://github.com/congtruongwr/lunar-vietnamese) theo giấy phép **Apache-2.0**.
 
 ## Điểm mới ở v2.0.0
 
-- **API thuần Việt hạng nhất**: Xuất trực tiếp các lớp tiếng Việt (`DuongLich`, `AmLich`, `BatTu`, `CuuTinh`, `PhatLich`, `DaoLich`, `DaNgonNgu`, ...) và phương thức tiếng Việt (`getAmLich()`, `getThu()`, `getCungHoangDao()`, `getCanChiNgay()`, `getConGiap()`, `getNapAmNgay()`, `getViecNenLam()`, `getViecKiengKy()`, ...), giữ nguyên **tương thích ngược 100%** với `Solar` / `Lunar`.
-- **Hoàn thiện bản địa hóa `"vi"`**: Sửa hiển thị tháng nhuận (`"Nhuận ..."`), sửa tra cứu `LunarUtil.POSITION_DESC`, thêm khoảng trắng Can-Chi cho `Nạp Âm`, `Tuần`/`Quý`/`Năm` tiếng Việt, `Solar.fromBaZi(...)` hỗ trợ Can Chi tiếng Việt có dấu cách (`"Bính Ngọ"`), và ngày lễ Thanh Minh trong `getSalaryRate()`.
-- **Sẵn sàng dùng ngay trên trình duyệt**: Cung cấp sẵn `lunar.min.js` ở thư mục gốc, TypeScript definitions đầy đủ (`index.d.ts`), và yêu cầu Node.js `>= 18.0.0`.
+- API thuần Việt Nam hạng nhất và đảm bảo tương thích 100%.
+- Hoàn thiện bản địa hóa không gian tra cứu.
+- Sẵn sàng dùng ngay trên trình duyệt.
 
 ## Cài đặt
 
@@ -67,7 +67,7 @@ console.log(solar.toFullString());
 console.log(lunar.getYearShengXiao(), lunar.getDayInGanZhi());
 // Ngựa Mậu Dần
 
-// Chuyển đổi đa ngôn ngữ runtime: "vi" | "en" | "chs"
+// Chuyển đổi đa ngôn ngữ Runtime: "vi" | "en" | "chs"
 const { I18n } = require("lunar-vietnamese");
 I18n.setLanguage("en");
 console.log(Solar.fromYmd(2026, 2, 17).getLunar().getYearShengXiao());
