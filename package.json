@@ -36,7 +36,6 @@
     "lunar.min.js",
     "README.md",
     "README_EN.md",
-    "CHANGELOG.md",
     "LICENSE"
   ],
   "engines": {
