@@ -666,6 +666,10 @@
         baseYear = 1900;
       }
       var l = [];
+      yearGanZhi = _normGz(yearGanZhi);
+      monthGanZhi = _normGz(monthGanZhi);
+      dayGanZhi = _normGz(dayGanZhi);
+      timeGanZhi = _normGz(timeGanZhi);
       var yg = _splitGz(yearGanZhi);
       var mg = _splitGz(monthGanZhi);
       var tg = _splitGz(timeGanZhi);
@@ -674,10 +678,7 @@
         m += 12;
       }
       if (
-        ((LunarUtil.index(yg[0], LunarUtil.GAN, -1) + 1) *
-          2 +
-          m) %
-          10 !==
+        ((LunarUtil.index(yg[0], LunarUtil.GAN, -1) + 1) * 2 + m) % 10 !==
         LunarUtil.index(mg[0], LunarUtil.GAN, -1)
       ) {
         return l;
@@ -1705,15 +1706,10 @@
           return "";
         },
         getDayChongDesc: function () {
-          var isVi = I18n.getLanguage() === "vi";
-          return (
-            "(" +
-            this.getDayChongGan() +
-            (isVi ? " " : "") +
-            this.getDayChong() +
-            ")" +
-            (isVi ? " " : "") +
-            this.getDayChongShengXiao()
+          return _formatChongDesc(
+            this.getDayChongGan(),
+            this.getDayChong(),
+            this.getDayChongShengXiao(),
           );
         },
         getDaySha: function () {
@@ -1738,12 +1734,10 @@
           return "";
         },
         getTimeChongDesc: function () {
-          return (
-            "(" +
-            this.getTimeChongGan() +
-            this.getTimeChong() +
-            ")" +
-            this.getTimeChongShengXiao()
+          return _formatChongDesc(
+            this.getTimeChongGan(),
+            this.getTimeChong(),
+            this.getTimeChongShengXiao(),
           );
         },
         getTimeSha: function () {
@@ -8093,10 +8087,7 @@
           while (ganIndex > 10) {
             ganIndex -= 10;
           }
-          return _joinGz(
-            LunarUtil.GAN[ganIndex],
-            LunarUtil.MONTH_ZHI[offset],
-          );
+          return _joinGz(LunarUtil.GAN[ganIndex], LunarUtil.MONTH_ZHI[offset]);
         },
         getMingGongNaYin: function () {
           return LunarUtil.NAYIN[this.getMingGong()];
@@ -8121,10 +8112,7 @@
           while (ganIndex > 10) {
             ganIndex -= 10;
           }
-          return _joinGz(
-            LunarUtil.GAN[ganIndex],
-            LunarUtil.MONTH_ZHI[offset],
-          );
+          return _joinGz(LunarUtil.GAN[ganIndex], LunarUtil.MONTH_ZHI[offset]);
         },
         getShenGongNaYin: function () {
           return LunarUtil.NAYIN[this.getShenGong()];
@@ -8599,15 +8587,10 @@
           return "";
         },
         getChongDesc: function () {
-          var sep = "vi" === I18n.getLanguage() ? " " : "";
-          return (
-            "(" +
-            this.getChongGan() +
-            sep +
-            this.getChong() +
-            ")" +
-            sep +
-            this.getChongShengXiao()
+          return _formatChongDesc(
+            this.getChongGan(),
+            this.getChong(),
+            this.getChongShengXiao(),
           );
         },
         getChongGan: function () {
@@ -12214,6 +12197,22 @@
       }
     }
     return [gz.substring(0, 1), gz.substring(1)];
+  }
+
+  function _normGz(gz) {
+    var parts = _splitGz(gz);
+    if (
+      LunarUtil.index(parts[0], LunarUtil.GAN, -1) > 0 &&
+      LunarUtil.index(parts[1], LunarUtil.ZHI, -1) > 0
+    ) {
+      return _joinGz(parts[0], parts[1]);
+    }
+    return gz;
+  }
+
+  function _formatChongDesc(gan, zhi, shengXiao) {
+    var sep = "vi" === I18n.getLanguage() ? " " : "";
+    return "(" + gan + sep + zhi + ")" + sep + shengXiao;
   }
 
   return {

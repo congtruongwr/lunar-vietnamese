@@ -183,8 +183,8 @@ export interface Lunar {
   getTimeTianShen(): string;
   getTimeTianShenType(): string;
   getTimeTianShenLuck(): string;
-  getDayYi(): string[];
-  getDayJi(): string[];
+  getDayYi(sect?: number): string[];
+  getDayJi(sect?: number): string[];
   getTimeYi(): string[];
   getTimeJi(): string[];
   getDayJiShen(): string[];
@@ -197,8 +197,6 @@ export interface Lunar {
   getAnimal(): string;
   getGong(): string;
   getShou(): string;
-  getGongInChinese(): string;
-  getShouInChinese(): string;
   getLiuYao(): string;
   getWuHou(): string;
   getHou(): string;
@@ -233,7 +231,65 @@ export interface JieQi {
   toString(): string;
 }
 
+export interface XiaoYun {
+  getYear(): number;
+  getAge(): number;
+  getIndex(): number;
+  getGanZhi(): string;
+  getXun(): string;
+  getXunKong(): string;
+}
+
+export interface LiuYue {
+  getIndex(): number;
+  getMonthInChinese(): string;
+  getGanZhi(): string;
+  getXun(): string;
+  getXunKong(): string;
+}
+
+export interface LiuNian {
+  getYear(): number;
+  getAge(): number;
+  getIndex(): number;
+  getLunar(): Lunar;
+  getGanZhi(): string;
+  getXun(): string;
+  getXunKong(): string;
+  getLiuYue(): LiuYue[];
+}
+
+export interface DaYun {
+  getStartYear(): number;
+  getEndYear(): number;
+  getStartAge(): number;
+  getEndAge(): number;
+  getIndex(): number;
+  getLunar(): Lunar;
+  getGanZhi(): string;
+  getXun(): string;
+  getXunKong(): string;
+  getLiuNian(n?: number): LiuNian[];
+  getXiaoYun(n?: number): XiaoYun[];
+}
+
+export interface Yun {
+  getGender(): number;
+  getStartYear(): number;
+  getStartMonth(): number;
+  getStartDay(): number;
+  getStartHour(): number;
+  isForward(): boolean;
+  getLunar(): Lunar;
+  getStartSolar(): Solar;
+  getDaYun(n?: number): DaYun[];
+}
+
 export interface EightChar {
+  setSect(sect: number): void;
+  getSect(): number;
+  getDayGanIndex(): number;
+  getDayZhiIndex(): number;
   getYear(): string;
   getMonth(): string;
   getDay(): string;
@@ -278,6 +334,16 @@ export interface EightChar {
   getMonthXunKong(): string;
   getDayXunKong(): string;
   getTimeXunKong(): string;
+  getTaiYuan(): string;
+  getTaiYuanNaYin(): string;
+  getTaiXi(): string;
+  getTaiXiNaYin(): string;
+  getMingGong(): string;
+  getMingGongNaYin(): string;
+  getShenGong(): string;
+  getShenGongNaYin(): string;
+  getLunar(): Lunar;
+  getYun(gender: number, sect?: number): Yun;
   toString(): string;
 }
 
@@ -431,14 +497,32 @@ export interface SolarYearStatic {
 }
 
 export interface LunarMonth {
+  getIndex(): number;
+  getGanIndex(): number;
+  getZhiIndex(): number;
+  getGan(): string;
+  getZhi(): string;
+  getGanZhi(): string;
   getYear(): number;
   getMonth(): number;
-  isLeap(): boolean;
   getDayCount(): number;
   getFirstJulianDay(): number;
-  toString(): string;
-  toFullString(): string;
+  isLeap(): boolean;
+  getPositionXi(): string;
+  getPositionXiDesc(): string;
+  getPositionYangGui(): string;
+  getPositionYangGuiDesc(): string;
+  getPositionYinGui(): string;
+  getPositionYinGuiDesc(): string;
+  getPositionFu(sect?: number): string;
+  getPositionFuDesc(sect?: number): string;
+  getPositionCai(): string;
+  getPositionCaiDesc(): string;
+  getPositionTaiSui(): string;
+  getPositionTaiSuiDesc(): string;
+  getNineStar(): NineStar;
   next(months: number): LunarMonth;
+  toString(): string;
 }
 
 export interface LunarMonthStatic {
@@ -447,9 +531,15 @@ export interface LunarMonthStatic {
 
 export interface LunarYear {
   getYear(): number;
+  getGanIndex(): number;
+  getZhiIndex(): number;
+  getGan(): string;
+  getZhi(): string;
+  getGanZhi(): string;
   getMonths(): LunarMonth[];
   getLeapMonth(): number;
   getDayCount(): number;
+  getNineStar(): NineStar;
   next(years: number): LunarYear;
   toString(): string;
   toFullString(): string;
@@ -465,15 +555,15 @@ export interface LunarTime {
   getGan(): string;
   getZhi(): string;
   getGanZhi(): string;
-  getShengxiao(): string;
+  getShengXiao(): string;
   getPositionXi(): string;
   getPositionXiDesc(): string;
   getPositionYangGui(): string;
   getPositionYangGuiDesc(): string;
   getPositionYinGui(): string;
   getPositionYinGuiDesc(): string;
-  getPositionFu(): string;
-  getPositionFuDesc(): string;
+  getPositionFu(sect?: number): string;
+  getPositionFuDesc(sect?: number): string;
   getPositionCai(): string;
   getPositionCaiDesc(): string;
   getNaYin(): string;
@@ -481,11 +571,18 @@ export interface LunarTime {
   getTianShenType(): string;
   getTianShenLuck(): string;
   getChong(): string;
-  getChongDesc(): string;
   getSha(): string;
+  getChongShengXiao(): string;
+  getChongDesc(): string;
+  getChongGan(): string;
+  getChongGanTie(): string;
   getYi(): string[];
   getJi(): string[];
   getNineStar(): NineStar;
+  getXun(): string;
+  getXunKong(): string;
+  getMinHm(): string;
+  getMaxHm(): string;
   toString(): string;
 }
 
@@ -549,7 +646,7 @@ export interface LunarUtilStatic {
   JIE_QI: string[];
   JIE_QI_IN_USE: string[];
   TIAN_SHEN: string[];
-  NAYIN: string[];
+  NAYIN: { [key: string]: string };
   convertTime(hm: string): string;
   getTimeZhiIndex(hm: string): number;
   getJiaZiIndex(ganZhi: string): number;
